@@ -1,38 +1,10 @@
+require 'train_data'
+
 module MetraSchedule
   class Line
-    attr_reader :name, :url, :dir, :sched, :start, :destination
+    include MetraSchedule::TrainData
 
-    LINES = {
-    :up_nw => {
-      :name => "Union Pacific Northwest", 
-      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-nw/schedule.full.html',
-      :stations => [
-        :ogilve,
-        :clyborn,
-        :irving_park,
-        :jefferson_park,
-        :gladstone_park,
-        :norwood_park,
-        :edison_park,
-        :park_ridge,
-        :dee_road,
-        :des_plaines,
-        :cumberland,
-        :mount_prospect,
-        :arlington_heights,
-        :arlington_park,
-        :palatine,
-        :barrington,
-        :fox_river_grove,
-        :cary,
-        :pingree_road,
-        :crystal_lake,
-        :woodstock,
-        :mchenry,
-        :harvard
-      ]
-    }
-  }
+    attr_reader :name, :url, :dir, :sched, :start, :destination
 
     def initialize(line_name)
       raise ArgumentError.new "That's not a valid line symbol. Please see the list in the README" \
