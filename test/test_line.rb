@@ -37,4 +37,10 @@ class TestLine < Test::Unit::TestCase
     assert_equal(line.direction.class, Metra.new.line(:up_nw).class)
   end
 
+  def test_direction_incorrect_argument
+    assert_raise ArgumentError do
+      line = Metra.new.line(:up_nw).direction(:blah)
+    end
+  end
+
 end
