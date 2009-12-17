@@ -20,5 +20,13 @@ module MetraSchedule
       self
     end
 
+    def outbound
+      direction(:outbound)
+    end
+
+    def inbound
+      direction(:inbound)
+    end
+
   end
 end

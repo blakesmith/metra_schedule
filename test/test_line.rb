@@ -43,4 +43,14 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_outbound
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.direction(:outbound), line.outbound)
+  end
+
+  def test_inbound
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.direction(:inbound), line.inbound)
+  end
+
 end
