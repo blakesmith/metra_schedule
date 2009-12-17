@@ -74,4 +74,24 @@ class TestLine < Test::Unit::TestCase
     assert_equal(line.schedule.class, Metra.new.line(:up_nw).class)
   end
 
+  def test_weekday
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.schedule(:weekday), line.weekday)
+  end
+
+  def test_saturday
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.schedule(:saturday), line.saturday)
+  end
+
+  def test_sunday
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.schedule(:sunday), line.sunday)
+  end
+
+  def test_holiday
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.schedule(:holiday), line.holiday)
+  end
+
 end

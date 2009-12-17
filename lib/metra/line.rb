@@ -36,5 +36,21 @@ module MetraSchedule
       self
     end
 
+    def weekday
+      schedule(:weekday)
+    end
+
+    def saturday
+      schedule(:saturday)
+    end
+
+    def sunday
+      schedule(:sunday)
+    end
+
+    def holiday
+      schedule(:holiday)
+    end
+
   end
 end
