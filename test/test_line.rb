@@ -24,4 +24,17 @@ class TestLine < Test::Unit::TestCase
     assert_equal("http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-nw/schedule.full.html", line.url)
   end
 
+  def test_direction
+    line = Metra.new.line(:up_nw)
+    assert_nothing_raised do
+      line.direction :outbound
+    end
+    assert_equal(:outbound, line.dir)
+    assert_nothing_raised do
+      line.direction :inbound
+    end
+    assert_equal(:inbound, line.dir)
+    assert_equal(line.direction.class, Metra.new.line(:up_nw).class)
+  end
+
 end

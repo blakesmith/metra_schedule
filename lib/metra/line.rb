@@ -1,6 +1,6 @@
 module MetraSchedule
   class Line
-    attr_reader :name, :url
+    attr_reader :name, :url, :dir
 
     LINES = {
     :up_nw => {:name => "Union Pacific Northwest", :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-nw/schedule.full.html'}
@@ -13,5 +13,12 @@ module MetraSchedule
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
     end
+    
+    def direction(dir=nil)
+      raise ArgumentError.new "Direction must be either :inbound or :outbound" unless dir == :outbound || dir == :inbound || dir == nil
+      @dir = dir unless dir == nil
+      self
+    end
+
   end
 end
