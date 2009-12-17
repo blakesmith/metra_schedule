@@ -90,5 +90,13 @@ module MetraSchedule
       self
     end
 
+    def from(station)
+      set_station(:start, station)
+    end
+
+    def to(station)
+      set_station(:destination, station)
+    end
+
   end
 end

@@ -102,4 +102,14 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:barrington, line.destination)
   end
 
+  def test_from
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.set_station(:start, :barrington), line.from(:barrington))
+  end
+
+  def test_to
+    line = Metra.new.line(:up_nw)
+    assert_equal(line.set_station(:destination, :ogilve), line.to(:ogilve))
+  end
+
 end
