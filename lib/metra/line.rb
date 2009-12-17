@@ -1,4 +1,4 @@
-require 'train_data'
+require File.join(File.dirname(__FILE__), 'train_data')
 
 module MetraSchedule
   class Line
