@@ -1,6 +1,6 @@
 module MetraSchedule
   class Line
-    attr_reader :name, :url, :dir
+    attr_reader :name, :url, :dir, :sched
 
     LINES = {
     :up_nw => {:name => "Union Pacific Northwest", :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-nw/schedule.full.html'}
@@ -26,6 +26,14 @@ module MetraSchedule
 
     def inbound
       direction(:inbound)
+    end
+
+    def schedule(sched=nil)
+      unless sched == :weekday or sched == :saturday or sched == :sunday or sched == :holiday or sched == nil
+        raise ArgumentError.new "Schedule must be :weekday, :saturday, :sunday or :holiday"
+      end
+      @sched = sched unless sched == nil
+      self
     end
 
   end

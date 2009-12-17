@@ -53,4 +53,25 @@ class TestLine < Test::Unit::TestCase
     assert_equal(line.direction(:inbound), line.inbound)
   end
 
+  def test_schedule
+    line = Metra.new.line(:up_nw)
+    assert_nothing_raised do
+      line.schedule :weekday
+    end
+    assert_equal(:weekday, line.sched)
+    assert_nothing_raised do
+      line.schedule :saturday
+    end
+    assert_equal(:saturday, line.sched)
+    assert_nothing_raised do
+      line.schedule :sunday
+    end
+    assert_equal(:sunday, line.sched)
+    assert_nothing_raised do
+      line.schedule :holiday
+    end
+    assert_equal(:holiday, line.sched)
+    assert_equal(line.schedule.class, Metra.new.line(:up_nw).class)
+  end
+
 end
