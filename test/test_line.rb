@@ -102,6 +102,13 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:barrington, line.destination)
   end
 
+  def test_set_station_invalid_station
+    line = Metra.new.line(:up_nw)
+    assert_raises ArgumentError do
+      line.set_station(:start, :bleepy_bleepy)
+    end
+  end
+
   def test_from
     line = Metra.new.line(:up_nw)
     assert_equal(line.set_station(:start, :barrington), line.from(:barrington))
