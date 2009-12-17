@@ -25,13 +25,15 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_initialize_all_options
+    stop = MetraSchedule::Stop.new :station => :barrington, :time => Time.now
     assert_nothing_raised do
-      @@t = MetraSchedule::Train.new :train_num => 651, :bikes => 12, :schedule => :weekday, :direction => :outbound
+      @@t = MetraSchedule::Train.new :train_num => 651, :bikes => 12, :schedule => :weekday, :direction => :outbound, :stops => [stop]
     end
     assert_equal(651, @@t.train_num)
     assert_equal(12, @@t.bikes)
     assert_equal(:weekday, @@t.schedule)
     assert_equal(:outbound, @@t.direction)
+    assert_equal([stop], @@t.stops)
   end
 
 end
