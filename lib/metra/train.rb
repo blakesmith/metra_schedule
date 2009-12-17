@@ -11,5 +11,11 @@ module MetraSchedule
         @stops = options[:stops] if options.has_key?(:stops)
       end
     end
+
+    def has_stop?(stop)
+      return true if stops.any? {|s| s.station == stop}
+      false
+    end
+
   end
 end
