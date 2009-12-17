@@ -94,4 +94,12 @@ class TestLine < Test::Unit::TestCase
     assert_equal(line.schedule(:holiday), line.holiday)
   end
 
+  def test_set_station
+    line = Metra.new.line(:up_nw)
+    line.set_station(:start, :barrington)
+    assert_equal(:barrington, line.start)
+    line.set_station(:destination, :barrington)
+    assert_equal(:barrington, line.destination)
+  end
+
 end
