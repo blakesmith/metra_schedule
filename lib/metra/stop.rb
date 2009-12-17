@@ -9,5 +9,10 @@ module MetraSchedule
       @station = options[:station] if options.has_key?(:station)
       @time = options[:time] if options.has_key?(:time)
     end
+
+    def is_after?(time)
+      @time > time
+    end
+
   end
 end

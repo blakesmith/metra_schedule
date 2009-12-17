@@ -21,5 +21,12 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_is_after?
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    assert(! stop1.is_after?(Time.parse("12:35")))
+    assert(stop2.is_after?(Time.parse("12:35")))
+  end
+
 
 end

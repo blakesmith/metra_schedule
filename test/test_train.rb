@@ -43,4 +43,10 @@ class TestLine < Test::Unit::TestCase
     assert(! @@t.has_stop?(:arlington_park))
   end
 
+  def test_is_before?
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bikes => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+  end
+
 end
