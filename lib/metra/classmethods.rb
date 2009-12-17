@@ -5,10 +5,6 @@ require 'open-uri'
 module MetraSchedule
   module ClassMethods
 
-    LINES = {
-    :up_nw => {:name => "Union Pacific Northwest", :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-nw/schedule.full.html'}
-    }
-
     def scrape(html_page)
       @html_doc = open(html_page) if html_page.is_a?(StringIO)
       @html_doc = html_page if html_page.is_a?(File)
@@ -16,7 +12,7 @@ module MetraSchedule
     end
 
     def line(line_name)
-      MetraSchedule::Line.new(LINES[line_name]) if LINES.has_key?(line_name)
+      MetraSchedule::Line.new(line_name)
     end
 
   end
