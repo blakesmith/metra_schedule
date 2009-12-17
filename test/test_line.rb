@@ -7,6 +7,15 @@ class TestLine < Test::Unit::TestCase
     assert_nothing_raised do
       Metra.new.line(:up_nw)
     end
+    assert_raise ArgumentError do
+      Metra.new.line("blah")
+    end
+  end
+
+  def test_initialize_with_incorrect_line_symbol
+    assert_raise ArgumentError do
+      Metra.new.line(:blah)
+    end
   end
 
   def test_has_name_and_url

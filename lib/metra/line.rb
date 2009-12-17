@@ -7,7 +7,9 @@ module MetraSchedule
     }
 
     def initialize(line_name)
-      raise ArgumentError "Please pass a symbol containing the line name" unless line_name.is_a?(Symbol)
+      raise ArgumentError.new "That's not a valid line symbol. Please see the list in the README" \
+        unless LINES.has_key?(line_name)
+      raise ArgumentError.new "Please pass a symbol containing the line name" unless line_name.is_a?(Symbol)
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
     end
