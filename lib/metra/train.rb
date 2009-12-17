@@ -17,5 +17,10 @@ module MetraSchedule
       false
     end
 
+    def filter_by_time(time)
+      @stops = @stops.find_all {|s| s.time > time}
+      self
+    end
+
   end
 end
