@@ -3,27 +3,28 @@ require 'open-uri'
 
 module MetraSchedule
   class Parser
-    attr_reader :html_doc
+    attr_reader :html_doc, :tables
 
     def initialize(html_doc)
-      @html_doc = open(html_doc) if html_doc.is_a?(StringIO)
-      @html_doc = html_doc if html_doc.is_a?(File)
-      @html_doc = Nokogiri::HTML(@html_doc)
+      html_doc = open(html_doc) if html_doc.is_a?(StringIO)
+      html_doc = html_doc if html_doc.is_a?(File)
+      @html_doc = Nokogiri::HTML(html_doc)
     end
 
     def scrape
       true
     end
 
-#doc = Nokogiri::HTML(open(UP_NW))
-#tables = doc.css('table.schedule')
-#weekday_inbound = tables[0..1]
-#saturday_inbound = tables[2]
-#sunday_holiday_inbound = tables[3]
-#weekday_outbound = tables[4..6]
-#saturday_outbound = tables[7]
-#sunday_holiday_outbound = tables[8]
-#p tables.size
+    def seperate_tables
+      tables = @html_doc.css('table.schedule')
+      @tables = []
+      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => tables[0..1]})
+      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => tables[2]})
+      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => tables[3]})
+      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => tables[4..6]})
+      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => tables[7]})
+      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => tables[8]})
+    end
 
   end
 end
