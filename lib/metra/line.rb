@@ -72,13 +72,18 @@ module MetraSchedule
     end
 
     def at(time)
-      raise ArgumentError.new "Time must be a valid time object" unless time.is_a?(Time)
-      @time = time
+      begin
+        @time = Time.parse(time)
+      rescue
+        raise ArgumentError.new "Time must be a valid time object" unless time.is_a?(Time)
+      end
       self
     end
 
     def trains
-      filter_by_stop
+      engines.find_all do |engine|
+        filter_by_stop.include?(engine) and filter_by_start.include?(engine)
+      end
     end
 
     private
@@ -86,6 +91,13 @@ module MetraSchedule
     def filter_by_stop
       engines.find_all do |engine|
         engine.has_stop?(@start) and engine.has_stop?(@destination)
+      end
+    end
+
+    def filter_by_start
+      return engines if @time.nil? #No start time specified
+      engines.find_all do |engine|
+        engine.in_time?(@start, @time)
       end
     end
 
