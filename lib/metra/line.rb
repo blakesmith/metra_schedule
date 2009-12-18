@@ -5,6 +5,7 @@ module MetraSchedule
     include MetraSchedule::TrainData
 
     attr_reader :name, :url, :dir, :sched, :start, :destination
+    attr_accessor :engines
 
     def initialize(line_name)
       raise ArgumentError.new "That's not a valid line symbol. Please see the list in the README" \
@@ -68,6 +69,17 @@ module MetraSchedule
 
     def to(station)
       set_station(:destination, station)
+    end
+
+    def trains
+      #engines.filter_by_stop.filter_by_schedule.filter_by_direction
+      filter_by_stop
+    end
+
+    def filter_by_stop
+      engines.find_all do |engine|
+        engine.has_stop?(@start) and engine.has_stop?(@destination)
+      end
     end
 
   end

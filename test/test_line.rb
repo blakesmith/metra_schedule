@@ -112,6 +112,17 @@ class TestLine < Test::Unit::TestCase
   def test_from
     line = Metra.new.line(:up_nw)
     assert_equal(line.set_station(:start, :barrington), line.from(:barrington))
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
+    stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3]
+    train2 = MetraSchedule::Train.new :stops => [stop1, stop3]
+    train3 = MetraSchedule::Train.new :stops => [stop2, stop3]
+    line.engines = [train1, train2, train3]
+
+    valid_trains = line.to(:barrington).from(:ogilve).trains
+    assert_equal([train1, train2], valid_trains)
   end
 
   def test_to
