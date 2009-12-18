@@ -11,6 +11,10 @@ module MetraSchedule
       @html_doc = Nokogiri::HTML(@html_doc)
     end
 
+    def scrape
+      true
+    end
+
 #doc = Nokogiri::HTML(open(UP_NW))
 #tables = doc.css('table.schedule')
 #weekday_inbound = tables[0..1]
