@@ -39,8 +39,8 @@ class TestLine < Test::Unit::TestCase
   def test_has_stop?
     stop = MetraSchedule::Stop.new :station => :barrington, :time => Time.now
     @@t = MetraSchedule::Train.new :train_num => 651, :bikes => 12, :schedule => :weekday, :direction => :outbound, :stops => [stop]
-    assert(@@t.has_stop?(:barrington))
-    assert(! @@t.has_stop?(:arlington_park))
+    assert_equal(true, @@t.has_stop?(:barrington))
+    assert_equal(false, @@t.has_stop?(:arlington_park))
   end
 
   def test_in_time?
