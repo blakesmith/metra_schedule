@@ -132,15 +132,22 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_deduce_direction
+    line = Metra.new.line(:up_nw)
+
+    assert_equal(:outbound, line.from(:ogilve).to(:barrington).deduce_direction)
+    assert_equal(:inbound, line.from(:barrington).to(:ogilve).deduce_direction)
+  end
+
   def test_trains_filter_by_station
     line = Metra.new.line(:up_nw)
 
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
     stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
-    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3]
-    train2 = MetraSchedule::Train.new :stops => [stop1, stop3]
-    train3 = MetraSchedule::Train.new :stops => [stop2, stop3]
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3], :direction => :outbound
+    train2 = MetraSchedule::Train.new :stops => [stop1, stop3], :direction => :outbound
+    train3 = MetraSchedule::Train.new :stops => [stop2, stop3], :direction => :outbound
     line.engines = [train1, train2, train3]
 
     valid_trains = line.to(:barrington).from(:ogilve).trains
@@ -153,8 +160,8 @@ class TestLine < Test::Unit::TestCase
     stop1 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:40')
     stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
-    train1 = MetraSchedule::Train.new :stops => [stop1, stop3]
-    train2 = MetraSchedule::Train.new :stops => [stop2, stop3]
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop3], :direction => :inbound
+    train2 = MetraSchedule::Train.new :stops => [stop2, stop3], :direction => :inbound
     line.engines = [train1, train2]
 
     valid_trains = line.to(:ogilve).from(:arlington_heights).at('12:35').trains
@@ -167,13 +174,28 @@ class TestLine < Test::Unit::TestCase
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
     stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
-    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3]
-    train2 = MetraSchedule::Train.new :stops => [stop1, stop3]
-    train3 = MetraSchedule::Train.new :stops => [stop2, stop3]
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3], :direction => :outbound
+    train2 = MetraSchedule::Train.new :stops => [stop1, stop3], :direction => :outbound
+    train3 = MetraSchedule::Train.new :stops => [stop2, stop3], :direction => :outbound
     line.engines = [train1, train2, train3]
 
     valid_trains = line.outbound.at('12:00').trains
     assert_equal([train1, train2, train3], valid_trains)
+  end
+
+  def test_filter_by_direction
+    line = Metra.new.line(:up_nw)
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+
+    train1 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2]
+    train2 = MetraSchedule::Train.new :direction => :inbound, :stops => [stop1, stop2]
+    train3 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2]
+    line.engines = [train1, train2, train3]
+
+    valid_trains = line.to(:barrington).from(:ogilve).trains
+    assert_equal([train1, train3], valid_trains)
   end
 
 end

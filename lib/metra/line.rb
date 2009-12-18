@@ -4,13 +4,14 @@ module MetraSchedule
   class Line
     include MetraSchedule::TrainData
 
-    attr_reader :name, :url, :dir, :sched, :start, :destination, :time
+    attr_reader :line_key, :name, :url, :dir, :sched, :start, :destination, :time
     attr_accessor :engines
 
     def initialize(line_name)
       raise ArgumentError.new "That's not a valid line symbol. Please see the list in the README" \
         unless LINES.has_key?(line_name)
       raise ArgumentError.new "Please pass a symbol containing the line name" unless line_name.is_a?(Symbol)
+      @line_key = line_name
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
     end
@@ -20,6 +21,18 @@ module MetraSchedule
       @dir = dir unless dir == nil
       self
     end
+
+    def deduce_direction
+      return @dir if @dir
+      if LINES[@line_key][:stations].rindex(@start) < LINES[@line_key][:stations].rindex(@destination)
+        :outbound
+      elsif LINES[@line_key][:stations].rindex(@start) > LINES[@line_key][:stations].rindex(@destination)
+        :inbound
+      else
+        :unknown
+      end
+    end
+
 
     def outbound
       direction(:outbound)
@@ -82,7 +95,7 @@ module MetraSchedule
 
     def trains
       engines.find_all do |engine|
-        filter_by_stop.include?(engine) and filter_by_start.include?(engine)
+        filter_by_stop.include?(engine) and filter_by_start.include?(engine) and filter_by_direction.include?(engine)
       end
     end
 
@@ -104,6 +117,13 @@ module MetraSchedule
       return engines if not @time or not @start
       engines.find_all do |engine|
         engine.in_time?(@start, @time)
+      end
+    end
+
+    def filter_by_direction
+      return engines if not @start and @destination and not @dir
+      engines.find_all do |engine|
+        engine.direction == deduce_direction
       end
     end
 
