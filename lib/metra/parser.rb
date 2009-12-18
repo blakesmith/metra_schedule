@@ -32,11 +32,17 @@ module MetraSchedule
         t[:tables].each do |table|
           train_count(table).each do |count|
             new_train = MetraSchedule::Train.new :direction => t[:direction], \
-              :schedule => t[:schedule], :stops => make_stops(table, count)
+              :schedule => t[:schedule], :stops => find_stops(table, count)
             @trains.push(new_train)
           end
         end
       end
+    end
+
+    def make_stops
+    end
+
+    def find_stops
     end
 
     def sanitize(input)
