@@ -23,4 +23,10 @@ class TestLine < Test::Unit::TestCase
     assert_equal(2, p.tables.find_all {|t| t[:schedule] == :sunday}.count)
   end
 
+  def test_sanitize
+    p = up_nw_stub
+    list = [1, 2, 3]
+    assert_equal(2, p.sanitize(list).count)
+  end
+
 end
