@@ -72,9 +72,10 @@ module MetraSchedule
     end
 
     def trains
-      #engines.filter_by_stop.filter_by_schedule.filter_by_direction
       filter_by_stop
     end
+
+    private
 
     def filter_by_stop
       engines.find_all do |engine|
