@@ -17,9 +17,9 @@ module MetraSchedule
       false
     end
 
-    def filter_by_time(time)
-      @stops = @stops.find_all {|s| s.time > time}
-      self
+    def in_time?(station, time)
+      return true if stops.find {|s| s.station == station}.time > time
+      false
     end
 
   end
