@@ -89,13 +89,19 @@ module MetraSchedule
     private
 
     def filter_by_stop
-      engines.find_all do |engine|
-        engine.has_stop?(@start) and engine.has_stop?(@destination)
+      if @start and not @destination
+        engines.find_all { |e| e.has_stop?(@start) }
+      elsif @destination and not @start
+        engines.find_all { |e| e.has_stop?(@destination) }
+      elsif @start and @destination
+        engines.find_all { |e| e.has_stop?(@start) and e.has_stop?(@destination)}
+      else
+        engines
       end
     end
 
     def filter_by_start
-      return engines if @time.nil? #No start time specified
+      return engines if not @time or not @start
       engines.find_all do |engine|
         engine.in_time?(@start, @time)
       end

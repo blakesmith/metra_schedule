@@ -161,4 +161,19 @@ class TestLine < Test::Unit::TestCase
     assert_equal([train2], valid_trains)
   end
 
+  def test_trains_just_direction_and_time
+    line = Metra.new.line(:up_nw)
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
+    stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop2, stop3]
+    train2 = MetraSchedule::Train.new :stops => [stop1, stop3]
+    train3 = MetraSchedule::Train.new :stops => [stop2, stop3]
+    line.engines = [train1, train2, train3]
+
+    valid_trains = line.outbound.at('12:00').trains
+    assert_equal([train1, train2, train3], valid_trains)
+  end
+
 end
