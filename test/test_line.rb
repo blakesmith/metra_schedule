@@ -119,6 +119,18 @@ class TestLine < Test::Unit::TestCase
     assert_equal(line.set_station(:destination, :ogilve), line.to(:ogilve))
   end
 
+  def test_at
+    line = Metra.new.line(:up_nw)
+    test_time = Time.now
+    assert_nothing_raised do
+      line.at(test_time)
+    end
+    assert_equal(line.time, test_time)
+    assert_raises ArgumentError do
+      line.at(:bloopybloop)
+    end
+  end
+
   def test_trains_filter_by_station
     line = Metra.new.line(:up_nw)
 

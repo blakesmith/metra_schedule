@@ -4,7 +4,7 @@ module MetraSchedule
   class Line
     include MetraSchedule::TrainData
 
-    attr_reader :name, :url, :dir, :sched, :start, :destination
+    attr_reader :name, :url, :dir, :sched, :start, :destination, :time
     attr_accessor :engines
 
     def initialize(line_name)
@@ -69,6 +69,12 @@ module MetraSchedule
 
     def to(station)
       set_station(:destination, station)
+    end
+
+    def at(time)
+      raise ArgumentError.new "Time must be a valid time object" unless time.is_a?(Time)
+      @time = time
+      self
     end
 
     def trains
