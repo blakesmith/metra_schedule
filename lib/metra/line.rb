@@ -15,6 +15,11 @@ module MetraSchedule
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
     end
+
+    def update_schedule
+      parser = MetraSchedule::Parser.new :url
+      false
+    end
     
     def direction(dir=nil)
       raise ArgumentError.new "Direction must be either :inbound or :outbound" unless dir == :outbound || dir == :inbound || dir == nil

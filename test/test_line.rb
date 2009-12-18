@@ -228,4 +228,10 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_update_schedule
+    line = Metra.new.line(:up_nw)
+    line.update_schedule
+    assert_not_nil(line.trains)
+  end
+
 end
