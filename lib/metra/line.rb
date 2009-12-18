@@ -95,7 +95,9 @@ module MetraSchedule
 
     def trains
       engines.find_all do |engine|
-        filter_by_stop.include?(engine) and filter_by_start.include?(engine) and filter_by_direction.include?(engine)
+        filter_by_stop.include?(engine) and \
+          filter_by_start.include?(engine) and \
+          filter_by_direction.include?(engine)
       end
     end
 
