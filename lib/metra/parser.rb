@@ -27,12 +27,13 @@ module MetraSchedule
     end
 
     def make_trains
+      @trains = []
       @tables.each do |t|
         t[:tables].each do |table|
           train_count(table).each do |count|
             new_train = MetraSchedule::Train.new :direction => t[:direction], \
-              :schedule => t[:schedule], :stops => make_stops(table)
-            @trains
+              :schedule => t[:schedule], :stops => make_stops(table, count)
+            @trains.push(new_train)
           end
         end
       end
