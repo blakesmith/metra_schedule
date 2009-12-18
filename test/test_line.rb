@@ -220,4 +220,12 @@ class TestLine < Test::Unit::TestCase
     assert_equal([train2, train4], valid_sunday)
   end
 
+  def test_no_engines
+    line = Metra.new.line(:up_nw)
+
+    assert_nothing_raised do
+      line.outbound.trains
+    end
+  end
+
 end
