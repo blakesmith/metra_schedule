@@ -97,7 +97,8 @@ module MetraSchedule
       engines.find_all do |engine|
         filter_by_stop.include?(engine) and \
           filter_by_start.include?(engine) and \
-          filter_by_direction.include?(engine)
+          filter_by_direction.include?(engine) and \
+          filter_by_schedule.include?(engine)
       end
     end
 
@@ -126,6 +127,17 @@ module MetraSchedule
       return engines if not @start and @destination and not @dir
       engines.find_all do |engine|
         engine.direction == deduce_direction
+      end
+    end
+
+    def filter_by_schedule
+      return engines if not @sched
+      engines.find_all do |engine|
+        if @sched == :holiday or @sched == :sunday
+          engine.schedule == :sunday or engine.schedule == :holiday
+        else
+          engine.schedule == @sched
+        end
       end
     end
 

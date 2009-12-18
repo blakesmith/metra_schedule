@@ -198,4 +198,26 @@ class TestLine < Test::Unit::TestCase
     assert_equal([train1, train3], valid_trains)
   end
 
+  def test_filter_by_schedule
+    line = Metra.new.line(:up_nw)
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+
+    train1 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :weekday
+    train2 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :holiday
+    train3 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :saturday
+    train4 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :sunday
+    line.engines = [train1, train2, train3, train4]
+
+    valid_weekday = line.to(:barrington).from(:ogilve).weekday.trains
+    assert_equal([train1], valid_weekday)
+    valid_saturday = line.to(:barrington).from(:ogilve).saturday.trains
+    assert_equal([train3], valid_saturday)
+    valid_holiday = line.to(:barrington).from(:ogilve).holiday.trains
+    assert_equal([train2, train4], valid_holiday)
+    valid_sunday = line.to(:barrington).from(:ogilve).sunday.trains
+    assert_equal([train2, train4], valid_sunday)
+  end
+
 end
