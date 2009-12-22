@@ -8,6 +8,7 @@ class TestLine < Test::Unit::TestCase
     f = File.open(File.join(File.dirname(__FILE__), 'fixture/UP_NW.html'), 'r')
     parser = MetraSchedule::Parser.new f
     parser.line = LINES[:up_nw]
+    parser.scrape
     parser
   end
 
@@ -21,7 +22,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_seperate_tables
     p = up_nw_stub
-    p.scrape
     assert_equal(2, p.tables.find_all {|t| t[:schedule] == :weekday}.count)
     assert_equal(2, p.tables.find_all {|t| t[:schedule] == :saturday}.count)
     assert_equal(2, p.tables.find_all {|t| t[:schedule] == :sunday}.count)
@@ -35,7 +35,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_train_count
     p = up_nw_stub
-    p.scrape
     assert_equal(16, p.train_count(p.tables[0][:tables][0]))
     assert_equal(16, p.train_count(p.tables[0][:tables][1]))
     assert_equal(12, p.train_count(p.tables[1][:tables][0]))
@@ -48,13 +47,11 @@ class TestLine < Test::Unit::TestCase
 
   def test_stop_count
     p = up_nw_stub
-    p.scrape
     assert_equal(23, p.stop_count(p.tables[0][:tables][0]))
   end
 
   def test_make_stop_inbound
     p = up_nw_stub
-    p.scrape
 
     node = p.tables[0][:tables][0].xpath("tbody[4]/tr/td[1]")[0]
     expected = MetraSchedule::Stop.new :station => :crystal_lake, :time => Time.parse("4:47AM")
@@ -64,7 +61,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_make_stop_outbound
     p = up_nw_stub
-    p.scrape
 
     node = p.tables[3][:tables][0].xpath("tbody[4]/tr/td[1]")[0]
     expected = MetraSchedule::Stop.new :station => :jefferson_park, :time => Time.parse("6:13AM")
@@ -74,7 +70,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_make_stop_nil
     p = up_nw_stub
-    p.scrape
 
     node = p.tables[0][:tables][0].xpath("tbody[1]/tr/td[1]")[0]
     assert_nil(p.make_stop(node, 0, :inbound))
@@ -82,7 +77,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_make_stop_am
     p = up_nw_stub
-    p.scrape
 
     node = p.tables[0][:tables][1].xpath("tbody[18]/tr/td[5]")[0]
     expected = MetraSchedule::Stop.new :station => :norwood_park, :time => Time.parse("11:57AM")
@@ -92,7 +86,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_make_stop_pm
     p = up_nw_stub
-    p.scrape
 
     node = p.tables[0][:tables][1].xpath("tbody[20]/tr/td[5]")[0]
     expected = MetraSchedule::Stop.new :station => :jefferson_park, :time => Time.parse("12:01PM")
@@ -102,7 +95,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_find_stops
     p = up_nw_stub
-    p.scrape
 
     table = p.tables[0][:tables][0]
     assert_equal(19, p.find_stops(table, 1, :inbound).count)
@@ -110,7 +102,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_find_stops_express
     p = up_nw_stub
-    p.scrape
 
     table = p.tables[0][:tables][0]
     stops = p.find_stops(table, 5, :inbound)
@@ -121,8 +112,6 @@ class TestLine < Test::Unit::TestCase
 
   def test_make_trains_count
     p = up_nw_stub
-    p.scrape
-
     trains = p.make_trains
     assert_equal(104, p.make_trains.count)
   end
