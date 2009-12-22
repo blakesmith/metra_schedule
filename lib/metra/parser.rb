@@ -5,7 +5,8 @@ require 'open-uri'
 
 module MetraSchedule
   class Parser
-    attr_reader :html_doc, :tables, :trains, :line
+    attr_reader :html_doc, :tables, :trains
+    attr_accessor :line
 
     def initialize(html_doc)
       html_doc = open(html_doc) if html_doc.is_a?(StringIO)

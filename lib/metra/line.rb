@@ -18,6 +18,7 @@ module MetraSchedule
 
     def update_schedule
       parser = MetraSchedule::Parser.new :url
+      parser.line = @line_key
       return true if parser.scrape == true
       false
     end
