@@ -107,4 +107,15 @@ class TestLine < Test::Unit::TestCase
     assert_equal(19, p.find_stops(table, 1, :inbound).count)
   end
 
+  def test_find_stops_express
+    p = up_nw_stub
+    p.seperate_tables
+
+    table = p.tables[0][:tables][0]
+    stops = p.find_stops(table, 5, :inbound)
+    assert_equal(Time.parse("6:43AM").to_f , stops[6].time.to_f)
+    assert_equal(:arlington_park, stops[6].station)
+    assert_equal(10, stops.count)
+  end
+
 end
