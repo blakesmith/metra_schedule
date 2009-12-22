@@ -125,4 +125,13 @@ class TestLine < Test::Unit::TestCase
     assert_equal(632, train_632.train_num)
   end
 
+  def test_find_bike_count
+    p = up_nw_stub
+    train_602 = p.make_trains.first
+    train_640 = p.make_trains[18]
+
+    assert_equal(nil, train_602.bike_limit)
+    assert_equal(12, train_640.bike_limit)
+  end
+
 end

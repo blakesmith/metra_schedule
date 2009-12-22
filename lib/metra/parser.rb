@@ -42,7 +42,7 @@ module MetraSchedule
           1.upto(train_count(table)).each do |count|
             new_train = MetraSchedule::Train.new :direction => t[:direction], \
               :schedule => t[:schedule], :stops => find_stops(table, count, t[:direction]), \
-              :train_num => find_train_num(table, count)
+              :train_num => find_train_num(table, count), :bike_limit => find_bike_count(table, count)
             @trains.push(new_train)
           end
         end
@@ -79,6 +79,15 @@ module MetraSchedule
     def find_train_num(table, count)
       text = table.xpath("thead/tr/th[#{count+1}]").text
       text.slice(0..-3).to_i #Chop off the AM/PM in the table
+    end
+
+    def find_bike_count(table, count)
+      num = table.xpath("thead/tr[3]/td[#{count}]").text.to_i
+      if num == 0
+        nil
+      else
+        num
+      end
     end
 
     def find_stops(table, count, direction)
