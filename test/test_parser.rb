@@ -29,4 +29,17 @@ class TestLine < Test::Unit::TestCase
     assert_equal(2, p.sanitize(list).count)
   end
 
+  def test_train_count
+    p = up_nw_stub
+    p.seperate_tables
+    assert_equal(16, p.train_count(p.tables[0][:tables][0]))
+    assert_equal(16, p.train_count(p.tables[0][:tables][1]))
+    assert_equal(12, p.train_count(p.tables[1][:tables][0]))
+    assert_equal(7, p.train_count(p.tables[2][:tables][0]))
+    assert_equal(16, p.train_count(p.tables[3][:tables][0]))
+    assert_equal(16, p.train_count(p.tables[3][:tables][1]))
+    assert_equal(1, p.train_count(p.tables[3][:tables][2]))
+    assert_equal(12, p.train_count(p.tables[4][:tables][0]))
+  end
+
 end

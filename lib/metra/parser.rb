@@ -18,12 +18,12 @@ module MetraSchedule
     def seperate_tables
       tables = @html_doc.css('table.schedule')
       @tables = []
-      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => tables[0..1]})
-      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => tables[2]})
-      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => tables[3]})
-      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => tables[4..6]})
-      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => tables[7]})
-      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => tables[8]})
+      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => [tables[0..1]].flatten})
+      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => [tables[2]].flatten})
+      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => [tables[3]].flatten})
+      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => [tables[4..6]].flatten})
+      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => [tables[7]].flatten})
+      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => [tables[8]].flatten})
     end
 
     def make_trains
@@ -39,10 +39,14 @@ module MetraSchedule
       end
     end
 
+    def train_count(table)
+      table.xpath('thead/tr[1]/th').count - 1
+    end
+
     def make_stops
     end
 
-    def find_stops
+    def find_stops(table, count)
     end
 
     def sanitize(input)
