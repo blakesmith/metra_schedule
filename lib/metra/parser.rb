@@ -35,7 +35,7 @@ module MetraSchedule
         t[:tables].each do |table|
           1.upto(train_count(table)).each do |count|
             new_train = MetraSchedule::Train.new :direction => t[:direction], \
-              :schedule => t[:schedule], :stops => find_stops(table, count)
+              :schedule => t[:schedule], :stops => find_stops(table, count, t[:direction])
             @trains.push(new_train)
           end
         end
@@ -51,11 +51,16 @@ module MetraSchedule
       table.xpath('tbody').count
     end
 
-    def make_stop(node, station_num)
+    def make_stop(node, station_num, direction)
       node_text = node.text
       return nil if node_text == "– "
       time = Time.parse(node_text + am_or_pm(node))
-      MetraSchedule::Stop.new :station => @line[:stations][station_num], :time => time
+      if direction == :inbound
+        station = @line[:stations].reverse[station_num]
+      else
+        station = @line[:stations][station_num]
+      end
+      MetraSchedule::Stop.new :station => station, :time => time
     end
 
     def am_or_pm(node)
@@ -64,10 +69,10 @@ module MetraSchedule
       return 'PM' if klass == 'pm'
     end
 
-    def find_stops(table, count)
+    def find_stops(table, count, direction)
       stops = []
       1.upto(stop_count(table)).each do |stop_count|
-        stop = make_stop(table.xpath("tbody[#{stop_count}]/tr/td[#{count}]")[0], stop_count - 1)
+        stop = make_stop(table.xpath("tbody[#{stop_count}]/tr/td[#{count}]")[0], stop_count - 1, direction)
         stops.push stop if stop
       end
       stops
