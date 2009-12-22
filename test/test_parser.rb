@@ -61,4 +61,14 @@ class TestLine < Test::Unit::TestCase
     assert_equal(expected.time, p.make_stop(node, 3, :inbound).time)
   end
 
+  def test_make_stop_outbound
+    p = up_nw_stub
+    p.seperate_tables
+
+    node = p.tables[3][:tables][0].xpath("tbody[4]/tr/td[1]")[0]
+    expected = MetraSchedule::Stop.new :station => :jefferson_park, :time => Time.parse("6:13AM")
+    assert_equal(expected.station, p.make_stop(node, 3, :outbound).station)
+    assert_equal(expected.time, p.make_stop(node, 3, :outbound).time)
+  end
+
 end
