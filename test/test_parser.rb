@@ -42,4 +42,10 @@ class TestLine < Test::Unit::TestCase
     assert_equal(12, p.train_count(p.tables[4][:tables][0]))
   end
 
+  def test_stop_count
+    p = up_nw_stub
+    p.seperate_tables
+    assert_equal(23, p.stop_count(p.tables[0][:tables][0]))
+  end
+
 end

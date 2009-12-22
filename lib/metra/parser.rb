@@ -30,7 +30,7 @@ module MetraSchedule
       @trains = []
       @tables.each do |t|
         t[:tables].each do |table|
-          train_count(table).each do |count|
+          1.upto(train_count(table)).each do |count|
             new_train = MetraSchedule::Train.new :direction => t[:direction], \
               :schedule => t[:schedule], :stops => find_stops(table, count)
             @trains.push(new_train)
@@ -41,6 +41,10 @@ module MetraSchedule
 
     def train_count(table)
       table.xpath('thead/tr[1]/th').count - 1
+    end
+
+    def stop_count(table)
+      table.xpath('tbody').count
     end
 
     def make_stops
