@@ -36,6 +36,7 @@ module MetraSchedule
 
     def deduce_direction
       return @dir if @dir
+      return :unknown unless @start and @destination
       if LINES[@line_key][:stations].rindex(@start) < LINES[@line_key][:stations].rindex(@destination)
         :outbound
       elsif LINES[@line_key][:stations].rindex(@start) > LINES[@line_key][:stations].rindex(@destination)
@@ -137,7 +138,7 @@ module MetraSchedule
     end
 
     def filter_by_direction
-      return engines if not @start and @destination and not @dir
+      return engines if deduce_direction == :unknown
       engines.find_all do |engine|
         engine.direction == deduce_direction
       end

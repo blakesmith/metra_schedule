@@ -235,4 +235,19 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_all_trains_on_line
+    line = Metra.new.line(:up_nw)
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+
+    train1 = MetraSchedule::Train.new :direction => :inbound, :stops => [stop1, stop2], :schedule => :weekday
+    train2 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :holiday
+    train3 = MetraSchedule::Train.new :direction => :inbound, :stops => [stop1, stop2], :schedule => :saturday
+    train4 = MetraSchedule::Train.new :direction => :outbound, :stops => [stop1, stop2], :schedule => :sunday
+    line.engines = [train1, train2, train3, train4]
+
+    assert_equal([train1, train2, train3, train4], line.trains)
+  end
+
 end
