@@ -40,6 +40,7 @@ module MetraSchedule
           end
         end
       end
+      @trains
     end
 
     def train_count(table)
@@ -53,7 +54,7 @@ module MetraSchedule
     def make_stop(node, station_num)
       node_text = node.text
       return nil if node_text == "– "
-      time = node_text + am_or_pm(node)
+      time = Time.parse(node_text + am_or_pm(node))
       MetraSchedule::Stop.new :station => @line[:stations][station_num], :time => time
     end
 

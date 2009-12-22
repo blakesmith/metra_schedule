@@ -2,10 +2,13 @@ require 'test/unit'
 require File.join(File.dirname(__FILE__), "../lib", "metra")
 
 class TestLine < Test::Unit::TestCase
+  include MetraSchedule::TrainData
 
   def up_nw_stub
     f = File.open(File.join(File.dirname(__FILE__), 'fixture/UP_NW.html'), 'r')
-    MetraSchedule::Parser.new f
+    parser = MetraSchedule::Parser.new f
+    parser.line = LINES[:up_nw]
+    parser
   end
 
   def test_init
@@ -46,6 +49,14 @@ class TestLine < Test::Unit::TestCase
     p = up_nw_stub
     p.seperate_tables
     assert_equal(23, p.stop_count(p.tables[0][:tables][0]))
+  end
+
+  def test_make_stop
+    p = up_nw_stub
+    p.seperate_tables
+
+    node = p.tables[0][:tables][0].xpath("tbody[4]/tr/td[1]")[0]
+    p p.make_stop(node, 19)
   end
 
 end
