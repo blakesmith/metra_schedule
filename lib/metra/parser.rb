@@ -1,9 +1,11 @@
+# coding: utf-8
+
 require 'nokogiri'
 require 'open-uri'
 
 module MetraSchedule
   class Parser
-    attr_reader :html_doc, :tables, :trains
+    attr_reader :html_doc, :tables, :trains, :line
 
     def initialize(html_doc)
       html_doc = open(html_doc) if html_doc.is_a?(StringIO)
@@ -47,10 +49,26 @@ module MetraSchedule
       table.xpath('tbody').count
     end
 
-    def make_stops
+    def make_stop(node, station_num)
+      node_text = node.text
+      return nil if node_text == "– "
+      time = node_text + am_or_pm(node)
+      MetraSchedule::Stop.new :station => @line[:stations][station_num], :time => time
+    end
+
+    def am_or_pm(node)
+      klass = node.attributes["class"].value
+      return 'AM' if klass == 'am'
+      return 'PM' if klass == 'pm'
     end
 
     def find_stops(table, count)
+      stops = []
+      1.upto(stop_count(table)).each do |stop_count|
+        stop = make_stop(table.xpath("tbody[#{stop_count}]/tr/td[#{count}]")[0], stop_count - 1)
+        stops.push stop if stop
+      end
+      stops
     end
 
     def sanitize(input)
