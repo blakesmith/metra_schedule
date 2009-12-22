@@ -13,9 +13,10 @@ class TestLine < Test::Unit::TestCase
 
   def test_init
     assert_nothing_raised do
-      MetraSchedule::Parser.new 'http://blake.com'
+      @@p = MetraSchedule::Parser.new 'http://blake.com'
     end
     assert_not_nil(up_nw_stub.html_doc)
+    assert_not_nil(@@p.html_doc)
   end
 
   def test_seperate_tables

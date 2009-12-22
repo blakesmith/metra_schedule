@@ -17,10 +17,15 @@ module MetraSchedule
     end
 
     def update_schedule
-      parser = MetraSchedule::Parser.new :url
-      parser.line = @line_key
-      return true if parser.scrape == true
-      false
+      parser = MetraSchedule::Parser.new @url
+      parser.line = LINES[@line_key]
+      new_trains = parser.scrape
+      if new_trains
+        @engines = new_trains
+        true
+      else
+        false
+      end
     end
     
     def direction(dir=nil)
