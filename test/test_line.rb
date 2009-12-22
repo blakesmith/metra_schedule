@@ -3,6 +3,13 @@ require File.join(File.dirname(__FILE__), "../lib", "metra")
 
 class TestLine < Test::Unit::TestCase
 
+# INTEGRATION:
+#  def test_update_schedule
+#    line = Metra.new.line(:up_nw).outbound
+#    line.update_schedule
+#    assert_not_nil(line.trains)
+#  end
+
   def test_initialize_with_line_name
     assert_nothing_raised do
       Metra.new.line(:up_nw)
@@ -226,12 +233,6 @@ class TestLine < Test::Unit::TestCase
     assert_nothing_raised do
       line.outbound.trains
     end
-  end
-
-  def test_update_schedule
-    line = Metra.new.line(:up_nw).outbound
-    line.update_schedule
-    assert_not_nil(line.trains)
   end
 
 end

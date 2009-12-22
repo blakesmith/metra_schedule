@@ -9,14 +9,19 @@ module MetraSchedule
     attr_accessor :line
 
     def initialize(html_doc)
-      html_doc = open(html_doc) if html_doc.is_a?(String)
-      html_doc = html_doc if html_doc.is_a?(File)
-      @html_doc = Nokogiri::HTML(html_doc)
+      @html_doc = html_doc
     end
 
     def scrape
+      parse_nokogiri
       seperate_tables
       make_trains
+    end
+
+    def parse_nokogiri
+      html_doc = open(@html_doc) if @html_doc.is_a?(String)
+      html_doc = @html_doc if @html_doc.is_a?(File)
+      @html_doc = Nokogiri::HTML(html_doc)
     end
 
     def seperate_tables
