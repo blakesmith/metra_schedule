@@ -99,4 +99,12 @@ class TestLine < Test::Unit::TestCase
     assert_equal(expected.time, p.make_stop(node, 19, :inbound).time)
   end
 
+  def test_find_stops
+    p = up_nw_stub
+    p.seperate_tables
+
+    table = p.tables[0][:tables][0]
+    assert_equal(19, p.find_stops(table, 1, :inbound).count)
+  end
+
 end
