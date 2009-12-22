@@ -118,4 +118,12 @@ class TestLine < Test::Unit::TestCase
     assert_equal(10, stops.count)
   end
 
+  def test_make_trains_count
+    p = up_nw_stub
+    p.seperate_tables
+
+    trains = p.make_trains
+    assert_equal(104, p.make_trains.count)
+  end
+
 end
