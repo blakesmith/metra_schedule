@@ -51,6 +51,8 @@ module MetraSchedule
     def retrieve_line(line)
       if line_exists?(line)
         File.open(File.join(@cache_dir, line.line_key.to_s), 'r') {|f| Marshal.load(f)}
+      else
+        nil
       end
     end
     

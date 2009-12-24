@@ -16,12 +16,22 @@ module MetraSchedule
       @url = LINES[line_name][:url]
     end
 
+    def load_schedule
+      cached_line = MetraSchedule::Cacher.load_from_cache(self)
+      unless cached_line
+        update_schedule
+      else
+        @engines = cached_line.engines
+      end
+    end
+
     def update_schedule
       parser = MetraSchedule::Parser.new @url
       parser.line = LINES[@line_key]
       new_trains = parser.scrape
       if new_trains
         @engines = new_trains
+        MetraSchedule::Cacher.store_to_cache(self)
         true
       else
         false
