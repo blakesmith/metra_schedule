@@ -1,6 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{metra_schedule}
   s.version = "0.1"
+  s.has_rdoc = true
   s.date = %q{2009-12-24}
   s.authors = ["Blake Smith"]
   s.email = %q{blakesmith0@gmail.com}
