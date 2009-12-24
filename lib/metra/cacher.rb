@@ -9,6 +9,14 @@ module MetraSchedule
       @cache_dir = "/home/#{ENV['USER']}/.metra_schedule"
     end
 
+    def self.load_from_cache(line)
+      self.new.retrieve_line(line)
+    end
+
+    def self.store_to_cache(line)
+      self.new.persist_line(line)
+    end
+
     def create_cache_dir_if_not_exists
       unless check_for_metra_cache_dir
         create_metra_cache_dir 
