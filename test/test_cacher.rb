@@ -23,4 +23,12 @@ class TestLine < Test::Unit::TestCase
     assert_equal(true, c.check_for_metra_cache_dir)
     cleanup_dir
   end
+
+  def test_create_cache_dir_if_not_exists
+    cleanup_dir
+    c = MetraSchedule::Cacher.new
+    assert_equal(false, c.check_for_metra_cache_dir)
+    assert_equal(true, c.create_cache_dir_if_not_exists)
+    cleanup_dir
+  end
 end
