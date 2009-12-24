@@ -36,7 +36,7 @@ Make sure you have the gemcutter repository on your gem list and:
   # All inbound saturday trains that start at Barrington and end at Ogilve
   line.inbound.saturday.from(:barrington).to(:ogilve).trains
 
-  # All sunday/holiday outbound trains that start at Arlington Heights before 12:30PM and stop at Park Ridge 
+  # All sunday/holiday outbound trains that start at Arlington Heights after 12:30PM and stop at Park Ridge 
   line.outbound.holiday.from(:arlington_heights).at(Time.parse('12:30PM')).to(:park_ridge)
 
 = Trains
