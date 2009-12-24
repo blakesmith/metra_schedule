@@ -1,0 +1,83 @@
+= metra_schedule: A library to access the Chicago Metra schedule information as Ruby objects.
+
+CURRENTLY ONLY THE UNION PACIFIC NORTHWEST LINE IS SUPPORTED. More coming soon!
+
+metra_schedule provides:
+
+Scraper:: scrapes the metrarail.com website for schedule information.
+Schedule objects:: The scraper creates ruby objects for lines, trains and stops
+Cacher:: After a schedule is scraped, it can be serialized locally for subsequent object access
+Flexible Query Language:: Build complex scheduling constraints and permutations with the various query methods.
+
+= Usage
+
+How to use metra_schedule
+
+=== Setup
+
+Make sure you have the gemcutter repository on your gem list and:
+  
+  sudo gem install metra_schedule
+
+=== Using
+
+  require 'metra'
+  line = Metra.new.line(:up_nw) # Union pacific Northwest line
+  line.load_schedule
+
+=== Building a list of trains
+
+  # All outbound trains
+  line.outbound.trains
+
+  # All outbound weekday trains
+  line.outbound.weekday.trains
+
+  # All inbound saturday trains that start at Barrington and end at Ogilve
+  line.inbound.saturday.from(:barrington).to(:ogilve).trains
+
+  # All sunday/holiday outbound trains that start at Arlington Heights before 12:30PM and stop at Park Ridge 
+  line.outbound.holiday.from(:arlington_heights).at(Time.parse('12:30PM')).to(:park_ridge)
+
+= Trains
+
+Each train has the following variables that can be accessed:
+
+train.train_num :: Metra train number.
+train.stops :: An array of all Stop objects. Contains the stop name and what time the train will arrive at that stop
+train.schedule :: Symbol representing the day the train runs. Either :weekday, :saturday, or :sunday (holidays run on a sunday schedule)
+train.direction :: Symbol representing the train direction. Either :inbound or :outbound
+train.bike_limit :: Maximum number of bikes per train. nil if no limit.
+
+= Line Data
+
+Current supported lines:
+
+=== Union Pacific Northwest
+
+stations: 
+  
+  :ogilve,
+  :clyborn,
+  :irving_park,
+  :jefferson_park,
+  :gladstone_park,
+  :norwood_park,
+  :edison_park,
+  :park_ridge,
+  :dee_road,
+  :des_plaines,
+  :cumberland,
+  :mount_prospect,
+  :arlington_heights,
+  :arlington_park,
+  :palatine,
+  :barrington,
+  :fox_river_grove,
+  :cary,
+  :pingree_road,
+  :crystal_lake,
+  :woodstock,
+  :mchenry,
+  :harvard
+
