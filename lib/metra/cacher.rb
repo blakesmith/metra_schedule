@@ -26,5 +26,10 @@ module MetraSchedule
       FileUtils.mkdir(@cache_dir)      
     end
 
+    def line_exists?(line)
+      # Stub for now
+      false
+    end
+
   end
 end

@@ -31,4 +31,11 @@ class TestLine < Test::Unit::TestCase
     assert_equal(true, c.create_cache_dir_if_not_exists)
     cleanup_dir
   end
+
+  def test_check_if_line_cache_file_exists
+    c = MetraSchedule::Cacher.new
+    l = Metra.new.line(:up_nw) 
+    assert_equal(false, c.line_exists?(l))
+  end
+
 end
