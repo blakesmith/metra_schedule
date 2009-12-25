@@ -73,7 +73,7 @@ module MetraSchedule
       :name => "North Central Service",
       :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/ncs/schedule.full.html',
       :stations => [
-        :union,
+        :union_station,
         :western_avenue,
         :river_grove,
         :franklin_park,
@@ -93,7 +93,37 @@ module MetraSchedule
         :antioch
       ],
       :tables => {:weekday_inbound => 0, :weekday_outbound => 1 }
-    }
+    },
+    :md_w => {
+      :name => "Milwaukee District West",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/md-w/schedule.full.html',
+      :stations => [
+        :union_station,
+        :western_avenue,
+        :grand_cicero,
+        :hanson_park,
+        :galewood,
+        :mars,
+        :mont_clare,
+        :elmwood_park,
+        :river_park,
+        :franklin_park,
+        :mannheim,
+        :bensenville,
+        :wood_dale,
+        :itasca,
+        :medinah,
+        :roselle,
+        :schaumburg,
+        :hanover_park,
+        :bartlett,
+        :national_street,
+        :elgin,
+        :big_timber
+      ],
+      :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
+        :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
+    },
   }
   end
 end
