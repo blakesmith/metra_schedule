@@ -197,6 +197,39 @@ module MetraSchedule
         :joliet
       ],
       :tables => {:weekday_inbound => 0, :weekday_outbound => 1 }
+    },
+    :ri => {
+      :name => "Rock Island District",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/ri/schedule.full.html',
+      :stations => [
+        :chicago_lasalle_station,
+        :gresham,
+        :longwood,
+        :washington_heights,
+        :brainerd,
+        :beverly_hills_91_street,
+        :beverly_hills_95_street,
+        :beverly_hills_99_street,
+        :beverly_hills_103_street,
+        :beverly_hills_107_street,
+        :morgan_park_111_street,
+        :morgan_park_115_street,
+        :street_119,
+        :street_123,
+        :prairie_street,
+        :blue_island,
+        :robbins,
+        :midlothian,
+        :oak_forest,
+        :tinley_park,
+        :tinley_park_80_avenue,
+        :hickory_creek,
+        :mokena,
+        :new_lenox,
+        :joliet
+      ],
+      :tables => {:weekday_inbound => 0..2, :saturday_inbound => 3, :sunday_inbound => 4, \
+        :weekday_outbound => 5..7, :saturday_outbound => 8, :sunday_outbound => 9 }
     }
   }
   end
