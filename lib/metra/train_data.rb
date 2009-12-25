@@ -2,6 +2,7 @@ module MetraSchedule
   module TrainData
     attr_reader :LINES
 
+    ### Stations MUST be listed in outbound direction for the parser to function correctly!
     LINES = {
     :up_nw => {
       :name => "Union Pacific Northwest", 
