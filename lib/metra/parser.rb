@@ -27,12 +27,18 @@ module MetraSchedule
     def seperate_tables
       tables = @html_doc.css('table.schedule')
       @tables = []
-      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => [tables[@line[:tables][:weekday_inbound]]].flatten})
-      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => [tables[@line[:tables][:saturday_inbound]]].flatten})
-      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => [tables[@line[:tables][:sunday_inbound]]].flatten})
-      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => [tables[@line[:tables][:weekday_outbound]]].flatten})
-      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => [tables[@line[:tables][:saturday_outbound]]].flatten})
-      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => [tables[@line[:tables][:sunday_outbound]]].flatten})
+      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => [tables[@line[:tables][:weekday_inbound]]].flatten}) \
+        if @line[:tables].has_key?(:weekday_inbound)
+      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => [tables[@line[:tables][:saturday_inbound]]].flatten}) \
+        if @line[:tables].has_key?(:saturday_inbound)
+      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => [tables[@line[:tables][:sunday_inbound]]].flatten}) \
+        if @line[:tables].has_key?(:sunday_inbound)
+      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => [tables[@line[:tables][:weekday_outbound]]].flatten}) \
+        if @line[:tables].has_key?(:weekday_outbound)
+      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => [tables[@line[:tables][:saturday_outbound]]].flatten}) \
+        if @line[:tables].has_key?(:saturday_outbound)
+      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => [tables[@line[:tables][:sunday_outbound]]].flatten}) \
+        if @line[:tables].has_key?(:sunday_outbound)
     end
 
     def make_trains
