@@ -124,6 +124,33 @@ module MetraSchedule
       :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
         :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
     },
+    :up_w => {
+      :name => "Union Pacific West",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-w/schedule.full.html',
+      :stations => [
+        :ogilve,
+        :kedzie,
+        :oak_park,
+        :river_forest,
+        :maywood,
+        :melrose_park,
+        :bellwood,
+        :berkeley,
+        :elmhurst,
+        :villa_park,
+        :lombard,
+        :glen_ellyn,
+        :college_avenue,
+        :wheaton,
+        :winfield,
+        :west_chicago,
+        :geneva,
+        :la_fox,
+        :elburn
+      ],
+      :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
+        :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
+    }
   }
   end
 end
