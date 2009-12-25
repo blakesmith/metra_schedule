@@ -27,12 +27,12 @@ module MetraSchedule
     def seperate_tables
       tables = @html_doc.css('table.schedule')
       @tables = []
-      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => [tables[0..1]].flatten})
-      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => [tables[2]].flatten})
-      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => [tables[3]].flatten})
-      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => [tables[4..6]].flatten})
-      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => [tables[7]].flatten})
-      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => [tables[8]].flatten})
+      @tables.push ({:schedule => :weekday, :direction => :inbound, :tables => [tables[@line[:tables][:weekday_inbound]]].flatten})
+      @tables.push ({:schedule => :saturday, :direction => :inbound, :tables => [tables[@line[:tables][:saturday_inbound]]].flatten})
+      @tables.push ({:schedule => :sunday, :direction => :inbound, :tables => [tables[@line[:tables][:sunday_inbound]]].flatten})
+      @tables.push ({:schedule => :weekday, :direction => :outbound, :tables => [tables[@line[:tables][:weekday_outbound]]].flatten})
+      @tables.push ({:schedule => :saturday, :direction => :outbound, :tables => [tables[@line[:tables][:saturday_outbound]]].flatten})
+      @tables.push ({:schedule => :sunday, :direction => :outbound, :tables => [tables[@line[:tables][:sunday_outbound]]].flatten})
     end
 
     def make_trains

@@ -30,7 +30,9 @@ module MetraSchedule
         :woodstock,
         :mchenry,
         :harvard
-      ]
+      ],
+      :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
+        :weekday_outbound => 4..6, :saturday_outbound => 7, :sunday_outbound => 8 }
     }
   }
   end
