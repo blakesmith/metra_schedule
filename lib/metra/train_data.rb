@@ -150,6 +150,40 @@ module MetraSchedule
       ],
       :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
         :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
+    },
+    :bnsf => {
+      :name => "BNSF Railway",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/bnsf/schedule.full.html',
+      :stations => [
+        :union_station,
+        :halsted,
+        :western_avenue,
+        :cicero,
+        :lavergne,
+        :berwyn,
+        :harlem_ave,
+        :riverside,
+        :hollywood,
+        :brookfield,
+        :congress_park,
+        :lagrange_road,
+        :lagrange_stone_avenue,
+        :western_springs,
+        :highlands,
+        :hinsdale,
+        :west_hinsdale,
+        :clarendon_hills,
+        :westmont,
+        :fairview_avenue,
+        :downers_grove_main_street,
+        :belmont,
+        :lisle,
+        :naperville,
+        :route_59,
+        :aurora
+      ],
+      :tables => {:weekday_inbound => 0..2, :saturday_inbound => 3, :sunday_inbound => 4, \
+        :weekday_outbound => 5..7, :saturday_outbound => 8, :sunday_outbound => 9 }
     }
   }
   end
