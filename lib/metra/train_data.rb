@@ -184,6 +184,19 @@ module MetraSchedule
       ],
       :tables => {:weekday_inbound => 0..2, :saturday_inbound => 3, :sunday_inbound => 4, \
         :weekday_outbound => 5..7, :saturday_outbound => 8, :sunday_outbound => 9 }
+    },
+    :hc => {
+      :name => "Heritage Corridor",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/hc/schedule.full.html',
+      :stations => [
+        :union_station,
+        :summit,
+        :willow_springs,
+        :lemont,
+        :lockport,
+        :joliet
+      ],
+      :tables => {:weekday_inbound => 0, :weekday_outbound => 1 }
     }
   }
   end
