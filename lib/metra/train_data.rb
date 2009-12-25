@@ -69,6 +69,31 @@ module MetraSchedule
       :tables => {:weekday_inbound => 0..2, :saturday_inbound => 3, :sunday_inbound => 4, \
         :weekday_outbound => 5..7, :saturday_outbound => 8, :sunday_outbound => 9 }
     },
+    :ncs => {
+      :name => "North Central Service",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/ncs/schedule.full.html',
+      :stations => [
+        :union,
+        :western_avenue,
+        :river_grove,
+        :franklin_park,
+        :schiller_park,
+        :rosemont,
+        :ohare_transfer,
+        :prospect_heights,
+        :wheeling,
+        :buffalo_grove,
+        :prairie_view,
+        :vernon_hills,
+        :mundelein,
+        :libertyville,
+        :grayslake,
+        :round_lake_beach,
+        :lake_villa,
+        :antioch
+      ],
+      :tables => {:weekday_inbound => 0, :weekday_outbound => 1 }
+    }
   }
   end
 end
