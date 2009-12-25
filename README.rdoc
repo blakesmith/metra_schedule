@@ -1,6 +1,16 @@
 = metra_schedule: A library to access the Chicago Metra schedule information as Ruby objects.
 
-CURRENTLY ONLY THE UNION PACIFIC NORTHWEST LINE IS SUPPORTED. More coming soon!
+Supported Lines:
+  Union Pacific Northwest => :up_nw
+  Union Pacific North => :up_n
+  North Central Service => :ncs
+  Milwaukee District West => :md_w
+  Union Pacific West => :up_w
+  BNSF Railway => :bnsf
+  Heritage Corrider => :hc
+  Rock Island District => :ri
+  Metra Electric District => :me
+
 
 metra_schedule provides:
 
@@ -53,7 +63,7 @@ train.bike_limit :: Maximum number of bikes per train. nil if no limit.
 
 Current supported lines:
 
-=== Union Pacific Northwest
+=== Union Pacific Northwest => :up_nw
 
 stations: 
   
@@ -80,4 +90,245 @@ stations:
   :woodstock,
   :mchenry,
   :harvard
+
+
+=== Union Pacific North => :up_n
+
+stations: 
+
+  :ogilve,
+  :clyborn,
+  :ravenswood,
+  :rogers_park,
+  :evanston_main_street,
+  :evanston_davis_street,
+  :evanston_central_street,
+  :wilmette,
+  :kenilworth,
+  :indian_hill,
+  :winnetka,
+  :hubbard_woods,
+  :glencoe,
+  :braeside,
+  :ravinia_park,
+  :ravinia,
+  :highland_park,
+  :highwood,
+  :fort_sheridan,
+  :lake_forest,
+  :lake_bluff,
+  :greate_lakes,
+  :north_chicago,
+  :waukegan,
+  :zion,
+  :winthrop_harbor,
+  :kenosha
+
+
+=== North Central Service => :ncs
+
+stations:
+
+  :union_station,
+  :western_avenue,
+  :river_grove,
+  :franklin_park,
+  :schiller_park,
+  :rosemont,
+  :ohare_transfer,
+  :prospect_heights,
+  :wheeling,
+  :buffalo_grove,
+  :prairie_view,
+  :vernon_hills,
+  :mundelein,
+  :libertyville,
+  :grayslake,
+  :round_lake_beach,
+  :lake_villa,
+  :antioch
+
+
+=== Milwaukee District West => :md_w
+
+stations:
+
+  :union_station,
+  :western_avenue,
+  :grand_cicero,
+  :hanson_park,
+  :galewood,
+  :mars,
+  :mont_clare,
+  :elmwood_park,
+  :river_park,
+  :franklin_park,
+  :mannheim,
+  :bensenville,
+  :wood_dale,
+  :itasca,
+  :medinah,
+  :roselle,
+  :schaumburg,
+  :hanover_park,
+  :bartlett,
+  :national_street,
+  :elgin,
+  :big_timber
+
+
+=== Union Pacific West => :up_w
+
+stations:
+
+  :ogilve,
+  :kedzie,
+  :oak_park,
+  :river_forest,
+  :maywood,
+  :melrose_park,
+  :bellwood,
+  :berkeley,
+  :elmhurst,
+  :villa_park,
+  :lombard,
+  :glen_ellyn,
+  :college_avenue,
+  :wheaton,
+  :winfield,
+  :west_chicago,
+  :geneva,
+  :la_fox,
+  :elburn
+
+
+=== BNSF Railway => :bnsf
+
+stations:
+
+  :union_station,
+  :halsted,
+  :western_avenue,
+  :cicero,
+  :lavergne,
+  :berwyn,
+  :harlem_ave,
+  :riverside,
+  :hollywood,
+  :brookfield,
+  :congress_park,
+  :lagrange_road,
+  :lagrange_stone_avenue,
+  :western_springs,
+  :highlands,
+  :hinsdale,
+  :west_hinsdale,
+  :clarendon_hills,
+  :westmont,
+  :fairview_avenue,
+  :downers_grove_main_street,
+  :belmont,
+  :lisle,
+  :naperville,
+  :route_59,
+  :aurora
+
+
+=== Heritage Corrider => :hc
+
+stations:
+
+  :union_station,
+  :summit,
+  :willow_springs,
+  :lemont,
+  :lockport,
+  :joliet
+
+
+=== Rock Island District => :ri
+
+stations:
+
+  :chicago_lasalle_station,
+  :gresham,
+  :longwood,
+  :washington_heights,
+  :brainerd,
+  :beverly_hills_91_street,
+  :beverly_hills_95_street,
+  :beverly_hills_99_street,
+  :beverly_hills_103_street,
+  :beverly_hills_107_street,
+  :morgan_park_111_street,
+  :morgan_park_115_street,
+  :street_119,
+  :street_123,
+  :prairie_street,
+  :blue_island,
+  :robbins,
+  :midlothian,
+  :oak_forest,
+  :tinley_park,
+  :tinley_park_80_avenue,
+  :hickory_creek,
+  :mokena,
+  :new_lenox,
+  :joliet
+
+ 
+=== Metra Electric District => :me
+
+stations:
+
+  :milennium_station,
+  :van_buren_street,
+  :museum_campus,
+  :street_18,
+  :mccormick_place,
+  :street_27,
+  :street_47,
+  :street_51_53,
+  :street_55_56_57,
+  :street_59,
+  :street_63,
+  :street_75,
+  :street_79,
+  :street_83,
+  :street_87,
+  :street_91,
+  :street_95,
+  :street_103,
+  :street_107,
+  :street_111,
+  :street_115,
+  :riverdale,
+  :ivanhoe,
+  :street_147,
+  :harvey,
+  :hazel_crest,
+  :calumet,
+  :homewood,
+  :flossmoor,
+  :olympia_fields,
+  :street_211,
+  :matteson,
+  :richton_park,
+  :university_park,
+  :stony_island,
+  :bryn_mawr,
+  :south_shore,
+  :windsor_park,
+  :street_79,
+  :street_83,
+  :street_87,
+  :street_93,
+  :state_street,
+  :stewart_ridge,
+  :west_pullman,
+  :racine,
+  :ashland,
+  :burr_oak,
+  :blue_island
+
 
