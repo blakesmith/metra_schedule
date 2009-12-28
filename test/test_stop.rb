@@ -28,5 +28,9 @@ class TestLine < Test::Unit::TestCase
     assert(stop2.is_after?(Time.parse("12:35")))
   end
 
+  def test_pretty_print
+    assert_equal("Chicago Station", MetraSchedule::Stop.pretty_print(:chicago_station))
+  end
+
 
 end

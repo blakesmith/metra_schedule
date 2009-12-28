@@ -14,5 +14,9 @@ module MetraSchedule
       @time > time
     end
 
+    def self.pretty_print(sym)
+      sym.to_s.split("_").map {|s| s.capitalize}.join("\s")
+    end
+
   end
 end
