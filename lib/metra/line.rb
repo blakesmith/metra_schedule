@@ -93,7 +93,7 @@ module MetraSchedule
       unless start_or_destination == :start or start_or_destination == :destination
         raise ArgumentError.new "First argument must be either :start or :destination"
       end
-      raise ArgumentError.new "Not a valid station" unless LINES[:up_nw][:stations].include?(station)
+      raise ArgumentError.new "Not a valid station" unless LINES[@line_key][:stations].include?(station)
       @start = station if start_or_destination == :start
       @destination = station if start_or_destination == :destination 
       self
