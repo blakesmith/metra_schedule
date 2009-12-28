@@ -51,4 +51,15 @@ class TestLine < Test::Unit::TestCase
     assert_equal(false, @@t.in_time?(:barrington, Time.parse("12:35")))
   end
 
+  def test_departure_and_arrival
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+
+    l = Metra.new.line(:up_nw)
+    l.engines = [@@t]
+    train = l.trains.first
+    assert_equal({:departure => Time.parse("12:30"), :arrival => Time.parse("12:40")}, train.departure_and_arrival(:barrington, :arlington_heights))
+  end
+
 end

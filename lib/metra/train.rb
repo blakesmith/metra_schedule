@@ -22,5 +22,11 @@ module MetraSchedule
       false
     end
 
+    def departure_and_arrival(start, destination)
+      departure = @stops.find {|s| s.station == start}.time
+      arrival = @stops.find {|s| s.station == destination}.time
+      {:departure => departure, :arrival => arrival}
+    end
+
   end
 end
