@@ -116,6 +116,12 @@ module MetraSchedule
       self
     end
 
+    def deduce_direction_by_time
+      @dir = :inbound if Time.now < Time.parse("12:00PM")
+      @dir = :outbound if Time.now > Time.parse("12:00PM")
+      self
+    end
+
     def trains
       return [] unless engines
       engines.find_all do |engine|

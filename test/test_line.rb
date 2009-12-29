@@ -1,5 +1,6 @@
 require 'test/unit'
 require File.join(File.dirname(__FILE__), "../lib", "metra")
+require File.join(File.dirname(__FILE__), "timecop", "lib", "timecop")
 
 class TestLine < Test::Unit::TestCase
 
@@ -248,6 +249,17 @@ class TestLine < Test::Unit::TestCase
     line.engines = [train1, train2, train3, train4]
 
     assert_equal([train1, train2, train3, train4], line.trains)
+  end
+
+
+  def test_deduce_direction_by_time
+    Timecop.freeze(Time.parse("11:00AM"))
+    line = Metra.new.line(:up_nw).deduce_direction_by_time
+    assert_equal(:inbound, line.dir)
+
+    Timecop.freeze(Time.parse("12:01PM"))
+    line = Metra.new.line(:up_nw).deduce_direction_by_time
+    assert_equal(:outbound, line.dir)
   end
 
 end
