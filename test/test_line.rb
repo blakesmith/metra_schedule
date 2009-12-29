@@ -274,4 +274,10 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_deduce_schedule
+    line = Metra.new.line(:up_nw)
+    Timecop.freeze(2009, 12, 27)
+    assert_equal(:sunday, line.deduce_schedule.sched)
+  end
+
 end

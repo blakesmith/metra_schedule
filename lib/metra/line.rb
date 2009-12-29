@@ -89,6 +89,10 @@ module MetraSchedule
       schedule(:holiday)
     end
 
+    def deduce_schedule
+      on(Date.today)
+    end
+
     def set_station(start_or_destination, station)
       unless start_or_destination == :start or start_or_destination == :destination
         raise ArgumentError.new "First argument must be either :start or :destination"
