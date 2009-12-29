@@ -6,7 +6,7 @@ module MetraSchedule
     attr_accessor :cache_dir
 
     def initialize
-      @cache_dir = "/home/#{ENV['USER']}/.metra_schedule"
+      @cache_dir = "#{ENV['HOME']}/.metra_schedule"
     end
 
     def self.load_from_cache(line)
