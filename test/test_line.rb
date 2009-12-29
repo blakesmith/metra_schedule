@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'date'
 require File.join(File.dirname(__FILE__), "../lib", "metra")
 require File.join(File.dirname(__FILE__), "timecop", "lib", "timecop")
 
@@ -260,6 +261,17 @@ class TestLine < Test::Unit::TestCase
     Timecop.freeze(Time.parse("12:01PM"))
     line = Metra.new.line(:up_nw).deduce_direction_by_time
     assert_equal(:outbound, line.dir)
+  end
+
+  def test_on
+    line = Metra.new.line(:up_nw)
+    assert_equal(:weekday, line.on(Date.civil(2009, 12, 29)).sched)
+    assert_equal(:saturday, line.on(Date.civil(2009, 12, 26)).sched)
+    assert_equal(:sunday, line.on(Date.civil(2009, 12, 27)).sched)
+
+    assert_raises ArgumentError do
+      line.on("blah")
+    end
   end
 
 end

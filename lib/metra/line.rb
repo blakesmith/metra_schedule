@@ -116,6 +116,14 @@ module MetraSchedule
       self
     end
 
+    def on(date)
+      raise ArgumentError.new "Argument must be a date object!" unless date.is_a?(Date)
+      @sched = :weekday if (1..5).include?(date.cwday)
+      @sched = :saturday if date.cwday == 6
+      @sched = :sunday if date.cwday == 7
+      self
+    end
+
     def deduce_direction_by_time
       @dir = :inbound if Time.now < Time.parse("12:00PM")
       @dir = :outbound if Time.now > Time.parse("12:00PM")
