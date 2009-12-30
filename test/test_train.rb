@@ -44,11 +44,20 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_in_time?
-    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
-    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
     @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
-    assert_equal(true, @@t.in_time?(:arlington_heights, Time.parse("12:35")))
-    assert_equal(false, @@t.in_time?(:barrington, Time.parse("12:35")))
+    assert_equal(true, @@t.in_time?(:arlington_heights, Time.parse("12:35PM")))
+    assert_equal(false, @@t.in_time?(:barrington, Time.parse("12:35PM")))
+  end
+
+  def test_in_time_same_time_next_day
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+    tomorrow = Time.parse("12:35PM") + (60 * 60 * 24)
+    assert_equal(true, @@t.in_time?(:arlington_heights, tomorrow))
+    assert_equal(false, @@t.in_time?(:barrington, tomorrow))
   end
 
   def test_departure_and_arrival

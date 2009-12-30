@@ -19,7 +19,8 @@ module MetraSchedule
     end
 
     def in_time?(station, time)
-      return true if stops.find {|s| s.station == station}.time > time
+      stop_time = stops.find {|s| s.station == station}.time
+      return true if (stop_time.hour + stop_time.min) > (time.hour + time.min)
       false
     end
 

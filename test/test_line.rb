@@ -136,6 +136,7 @@ class TestLine < Test::Unit::TestCase
       line.at(Time.now)
     end
     assert_equal(line.time, Time.parse(test_time))
+    line.at(Time.parse("12:30PM"))
     assert_raises ArgumentError do
       line.at(:bloopybloop)
     end
