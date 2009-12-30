@@ -176,7 +176,7 @@ module MetraSchedule
     end
 
     def filter_by_start
-      return engines if not @time or not @start
+      return engines unless @time and @start
       engines.find_all do |engine|
         engine.in_time?(@start, @time)
       end
@@ -190,7 +190,7 @@ module MetraSchedule
     end
 
     def filter_by_schedule
-      return engines if not @sched
+      return engines unless @sched
       engines.find_all do |engine|
         if @sched == :holiday or @sched == :sunday
           engine.schedule == :sunday or engine.schedule == :holiday
