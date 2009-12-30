@@ -112,10 +112,12 @@ module MetraSchedule
     end
 
     def at(time)
-      begin
-        @time = Time.parse(time)
-      rescue
-        raise ArgumentError.new "Time must be a valid time object" unless time.is_a?(Time)
+      if time.is_a?(String)
+        @time = Time.parse(time) 
+      elsif time.is_a?(Time)
+        @time = time 
+      else
+        raise ArgumentError.new "Time must be either a valid time object, or a string that parses to one"
       end
       self
     end

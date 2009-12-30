@@ -132,8 +132,8 @@ class TestLine < Test::Unit::TestCase
     line = Metra.new.line(:up_nw)
     test_time = "12:30PM"
     assert_nothing_raised do
-      line.at(test_time)
       line.at(Time.now)
+      line.at(test_time)
     end
     assert_equal(line.time, Time.parse(test_time))
     line.at(Time.parse("12:30PM"))
