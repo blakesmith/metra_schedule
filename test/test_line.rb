@@ -263,6 +263,24 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:outbound, line.dir)
   end
 
+  def test_deduce_direction_by_time_after_midnight
+    Timecop.freeze(Time.parse("12:01AM"))
+    line = Metra.new.line(:up_nw).deduce_direction_by_time
+    assert_equal(:outbound, line.dir)
+  end
+
+  def test_deduce_direction_by_time_at_midnight
+    Timecop.freeze(Time.parse("12:00AM"))
+    line = Metra.new.line(:up_nw).deduce_direction_by_time
+    assert_equal(:outbound, line.dir)
+  end
+
+  def test_deduce_direction_by_time_at_3AM
+    Timecop.freeze(Time.parse("3:00AM"))
+    line = Metra.new.line(:up_nw).deduce_direction_by_time
+    assert_equal(:inbound, line.dir)
+  end
+
   def test_on
     line = Metra.new.line(:up_nw)
     assert_equal(:weekday, line.on(Date.civil(2009, 12, 29)).sched)
