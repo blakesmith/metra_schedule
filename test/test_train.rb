@@ -62,4 +62,28 @@ class TestLine < Test::Unit::TestCase
     assert_equal({:departure => Time.parse("12:30"), :arrival => Time.parse("12:40")}, train.departure_and_arrival(:barrington, :arlington_heights))
   end
 
+  def test_my_departure_and_my_arrival
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+
+    l = Metra.new.line(:up_nw).from(:barrington).to(:arlington_heights)
+    l.engines = [@@t]
+    train = l.trains.first
+    assert_equal(Time.parse("12:30"), train.my_departure)
+    assert_equal(Time.parse("12:40"), train.my_arrival)
+  end
+
+  def test_my_departure_and_my_arrival_with_no_start_or_destination
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+
+    l = Metra.new.line(:up_nw)
+    l.engines = [@@t]
+    train = l.trains.first
+    assert_equal(nil, train.my_departure)
+    assert_equal(nil, train.my_arrival)
+  end
+
 end

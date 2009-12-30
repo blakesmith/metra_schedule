@@ -144,15 +144,24 @@ module MetraSchedule
 
     def trains
       return [] unless engines
-      engines.find_all do |engine|
+      filtered_engines = engines.find_all do |engine|
         filter_by_stop.include?(engine) and \
           filter_by_start.include?(engine) and \
           filter_by_direction.include?(engine) and \
           filter_by_schedule.include?(engine)
       end
+      inject_my_times(filtered_engines)
     end
 
     private
+
+    def inject_my_times(engines)
+      return engines unless @start and @destination
+      engines.each do |engine|
+        engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
+        engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
+      end
+    end
 
     def filter_by_stop
       if @start and not @destination

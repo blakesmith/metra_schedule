@@ -1,6 +1,7 @@
 module MetraSchedule
   class Train
     attr_reader :train_num, :schedule, :bike_limit, :direction, :stops
+    attr_accessor :my_departure, :my_arrival # Injected when the line is filtered
 
     def initialize(options={})
       unless options.empty?
