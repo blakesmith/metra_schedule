@@ -18,11 +18,11 @@ module MetraSchedule
     end
 
     def load_schedule
-      cached_line = MetraSchedule::Cacher.load_from_cache(self)
-      unless cached_line
+      cached_engines = MetraSchedule::Cacher.load_from_cache(self)
+      unless cached_engines
         update_schedule
       else
-        @engines = cached_line.engines
+        @engines = cached_engines
       end
     end
 

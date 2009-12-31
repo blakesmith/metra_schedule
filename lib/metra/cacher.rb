@@ -45,7 +45,8 @@ module MetraSchedule
 
     def persist_line(line)
       create_cache_dir_if_not_exists
-      true if File.open(File.join(@cache_dir, line.line_key.to_s), 'w') {|f| Marshal.dump(line, f)}
+      return false unless line.engines
+      true if File.open(File.join(@cache_dir, line.line_key.to_s), 'w') {|f| Marshal.dump(line.engines, f)}
     end
 
     def retrieve_line(line)

@@ -56,7 +56,7 @@ class TestLine < Test::Unit::TestCase
     line.engines = [train1, train2, train3]
 
     assert_equal(true, c.persist_line(line))
-    assert_equal(line.engines.count, c.retrieve_line(line).engines.count)
+    assert_equal(line.engines.count, c.retrieve_line(line).count)
     cleanup_dir
   end
 
@@ -75,7 +75,7 @@ class TestLine < Test::Unit::TestCase
     line.engines = [train1, train2, train3]
 
     assert_equal(true, MetraSchedule::Cacher.store_to_cache(line))
-    assert_equal(c.retrieve_line(line).engines.count, MetraSchedule::Cacher.load_from_cache(line).engines.count)
+    assert_equal(c.retrieve_line(line).count, MetraSchedule::Cacher.load_from_cache(line).count)
     cleanup_dir
   end
 
