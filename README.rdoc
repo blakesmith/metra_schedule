@@ -52,7 +52,7 @@ How to use metra_schedule
 
 = Trains
 
-Instance variables:
+=== Instance variables:
 
 train.train_num :: Metra train number.
 train.stops :: An array of all Stop objects. Contains the stop name and what time the train will arrive at that stop
@@ -60,7 +60,7 @@ train.schedule :: Symbol representing the day the train runs. Either :weekday, :
 train.direction :: Symbol representing the train direction. Either :inbound or :outbound
 train.bike_limit :: Maximum number of bikes per train. nil if no limit.
 
-Instance methods on each train:
+=== Instance methods:
 
 train.my_travel_time :: Travel time in minutes of your trip. Assumes you specified Line#from and Line#to when you built your query
 train.print_my_travel_time :: Same as above, but in human readable form EG - "1 hour 2 minutes"
@@ -72,22 +72,22 @@ train.in_time?(station, time) :: Takes a station name symbol and time. Returns t
 
 Stored inside each train.
 
-Instance variables:
+=== Instance variables:
 
 stop.station :: Symbol representing the station name
 stop.time :: Time object with the time the train stops there
 
-Instance methods:
+=== Instance methods:
 
 stop.in_time?(time) :: True if time is less than stop.time
 
-Class methods:
+=== Class methods:
 
 Stop.pretty_print(station) :: Converts the station symbol to something human readable - EG: :irving_park becomes "Irving Park"
 
 = Lines
 
-Instance variables:
+=== Instance variables:
 
 line.line_key :: Symbol of the line name
 line.name :: Human readable line name EG - "Union Pacific Northwest"
@@ -99,7 +99,7 @@ line.destination :: Symbol representing destanation station name. EG - :ogilve. 
 line.time :: Time object representing the time you'd like to depart. Used to filter down lines. Set with Line#at
 
 
-Instance methods:
+=== Instance methods:
 
 line.load_schedule :: Load cached engine data from Marshaled cache dir (~/.metra_schedule) or if not available, fetch from the Metra website, parse and cache it
 line.trains :: Takes in all the other parameters you specified and returns only the trains that meet the criteria you specfied
