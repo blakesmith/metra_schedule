@@ -48,7 +48,7 @@ How to use metra_schedule
   line.outbound.holiday.from(:arlington_heights).at(Time.parse('12:30PM')).to(:park_ridge).trains
 
   # All inbound trains on December 30th 2009
-  line.inbound.on(Date.parse("December 30th 2009").trains
+  line.inbound.on(Date.parse("December 30th 2009")).trains
 
 = Trains
 
