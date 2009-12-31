@@ -16,3 +16,8 @@ Rake::TestTask.new(:test_functionals) do |t|
   t.test_files = FileList['test/functional/test*.rb']
   t.warning = false
 end
+
+Rake::TestTask.new(:test_integrations) do |t|
+  t.test_files = FileList['test/integration/test*.rb']
+  t.warning = false
+end

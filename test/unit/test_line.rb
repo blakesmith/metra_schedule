@@ -2,13 +2,6 @@ require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
 
 class TestLine < Test::Unit::TestCase
 
-# INTEGRATION:
-#  def test_update_schedule
-#    line = Metra.new.line(:up_nw).outbound
-#    line.update_schedule
-#    assert_not_nil(line.trains)
-#  end
-
   def test_initialize_with_line_name
     assert_nothing_raised do
       Metra.new.line(:up_nw)

@@ -13,7 +13,7 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_all_filters
-    up_nw_stub.from(:ogilve).to(:barrington).at(Time.parse("12:15PM")).on(Date.parse("Dec 30 2009"))
+    up_nw_stub.from(:ogilve).to(:barrington).at(Time.parse("12:15AM")).on(Date.parse("Dec 30 2009"))
     assert_equal(1, up_nw_stub.trains.count)
   end
 end
