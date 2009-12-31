@@ -46,28 +46,32 @@ module MetraSchedule
 
     def print_my_travel_time
       if my_travel_time
-        hours = (my_travel_time / 60.0).floor
-        if hours > 0
-          minutes = my_travel_time - (60 * hours)
-          if hours == 1
-            if minutes != 0
-              return "#{hours} hour #{minutes} minutes"
-            else
-              return "#{hours} hour"
-            end
-          else
-            if minutes != 0
-              return "#{hours} hours #{minutes} minutes"
-            else
-              return "#{hours} hours"
-            end
-          end
-        else
-          minutes = my_travel_time
-          return "#{minutes} minutes"
-        end
+        "#{print_my_travel_hours} #{print_my_travel_minutes}".strip
       end
     end
+
+    private 
+
+    def my_travel_hours
+      (my_travel_time / 60.0).floor
+    end
+
+    def my_travel_minutes
+      my_travel_time - (60 * my_travel_hours)
+    end
+
+    def print_my_travel_hours
+      return nil if my_travel_hours == 0
+      return "#{my_travel_hours} hour" if my_travel_hours == 1
+      return "#{my_travel_hours} hours" if my_travel_hours > 1
+    end
+
+    def print_my_travel_minutes
+      return nil if my_travel_minutes == 0
+      return "#{my_travel_minutes} minute" if my_travel_minutes == 1
+      return "#{my_travel_minutes} minutes" if my_travel_minutes > 1
+    end
+
 
   end
 end
