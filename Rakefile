@@ -4,7 +4,7 @@ require 'rake/testtask'
 task :default => [:test]
 
 desc "Run unit tests (functionals fail on win32)"
-task :test => [:test_units]
+task :test => [:test_units, :test_functionals]
 
 desc "Run just the unit tests"
 Rake::TestTask.new(:test_units) do |t|
@@ -13,6 +13,6 @@ Rake::TestTask.new(:test_units) do |t|
 end
 
 Rake::TestTask.new(:test_functionals) do |t|
-  t.test_files = FileList['test/functionals/test*.rb']
+  t.test_files = FileList['test/functional/test*.rb']
   t.warning = false
 end
