@@ -14,7 +14,7 @@ module MetraSchedule
       @line_key = line_name
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
-      @filters = [:filter_by_stop, :filter_by_start, :filter_by_direction, :filter_by_schedule]
+      @filters = [filter_by_stop, filter_by_start, filter_by_direction, filter_by_schedule, inject_my_times]
     end
 
     def load_schedule
@@ -148,54 +148,63 @@ module MetraSchedule
     def trains
       return [] unless engines
       filtered_engines = @filters.inject(engines) do |engines, fun|
-        eval("#{fun}(engines)")
+        fun.call(engines)
       end
-      inject_my_times(filtered_engines)
     end
 
     private
 
-    def inject_my_times(engines)
-      return engines unless @start and @destination
-      engines.each do |engine|
-        engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
-        engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
+    def inject_my_times
+      lambda do |engines|
+        return engines unless @start and @destination
+        engines.each do |engine|
+          engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
+          engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
+        end
       end
     end
 
-    def filter_by_stop(engines)
-      if @start and not @destination
-        engines.find_all { |e| e.has_stop?(@start) }
-      elsif @destination and not @start
-        engines.find_all { |e| e.has_stop?(@destination) }
-      elsif @start and @destination
-        engines.find_all { |e| e.has_stop?(@start) and e.has_stop?(@destination)}
-      else
-        engines
-      end
-    end
-
-    def filter_by_start(engines)
-      return engines unless @time and @start
-      engines.find_all do |engine|
-        engine.in_time?(@start, @time)
-      end
-    end
-
-    def filter_by_direction(engines)
-      return engines if deduce_direction == :unknown
-      engines.find_all do |engine|
-        engine.direction == deduce_direction
-      end
-    end
-
-    def filter_by_schedule(engines)
-      return engines unless @sched
-      engines.find_all do |engine|
-        if @sched == :holiday or @sched == :sunday
-          engine.schedule == :sunday or engine.schedule == :holiday
+    def filter_by_stop
+      lambda do |engines|
+        if @start and not @destination
+          engines.find_all { |e| e.has_stop?(@start) }
+        elsif @destination and not @start
+          engines.find_all { |e| e.has_stop?(@destination) }
+        elsif @start and @destination
+          engines.find_all { |e| e.has_stop?(@start) and e.has_stop?(@destination)}
         else
-          engine.schedule == @sched
+          engines
+        end
+      end
+    end
+
+    def filter_by_start
+      lambda do |engines|
+        return engines unless @time and @start
+        engines.find_all do |engine|
+          engine.in_time?(@start, @time)
+        end
+      end
+    end
+
+    def filter_by_direction
+      lambda do |engines|
+        return engines if deduce_direction == :unknown
+        engines.find_all do |engine|
+          engine.direction == deduce_direction
+        end
+      end
+    end
+
+    def filter_by_schedule
+      lambda do |engines|
+        return engines unless @sched
+        engines.find_all do |engine|
+          if @sched == :holiday or @sched == :sunday
+            engine.schedule == :sunday or engine.schedule == :holiday
+          else
+            engine.schedule == @sched
+          end
         end
       end
     end
