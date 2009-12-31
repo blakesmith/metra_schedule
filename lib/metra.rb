@@ -6,5 +6,5 @@ require File.join(File.dirname(__FILE__), 'metra', 'parser')
 require File.join(File.dirname(__FILE__), 'metra', 'cacher')
 
 class Metra
-  include MetraSchedule::ClassMethods
+  include MetraSchedule::InstanceMethods
 end

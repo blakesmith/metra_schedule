@@ -1,5 +1,5 @@
 module MetraSchedule
-  module ClassMethods
+  module InstanceMethods
 
     def line(line_name)
       MetraSchedule::Line.new(line_name)
