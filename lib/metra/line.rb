@@ -147,8 +147,8 @@ module MetraSchedule
 
     def trains
       return [] unless engines
-      filtered_engines = @filters.inject(engines) do |engines, fun|
-        fun.call(engines)
+      @filters.inject(engines) do |e, fun|
+        fun.call(e)
       end
     end
 

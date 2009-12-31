@@ -20,8 +20,17 @@ module MetraSchedule
 
     def in_time?(station, time)
       stop_time = stops.find {|s| s.station == station}.time
-      return true if (stop_time.hour + stop_time.min) > (time.hour + time.min)
-      false
+      if (stop_time.hour == time.hour)
+        if (stop_time.min > time.min)
+          return true
+        else
+          return false
+        end
+      elsif (stop_time.hour > time.hour)
+        return true
+      else
+        return false
+      end
     end
 
     def departure_and_arrival(start, destination)
