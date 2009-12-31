@@ -54,7 +54,7 @@ Make sure you have the gemcutter repository on your gem list and:
 
 = Trains
 
-Each train has the following variables that can be accessed:
+Instance variables:
 
 train.train_num :: Metra train number.
 train.stops :: An array of all Stop objects. Contains the stop name and what time the train will arrive at that stop
@@ -69,6 +69,23 @@ train.print_my_travel_time :: Same as above, but in human readable form EG - "1 
 train.has_stop?(stop) :: Takes a station name symbol and determines whether this train has that stop
 train.in_time?(station, time) :: Takes a station name symbol and time. Returns true if the time is before the time the train reaches that stop
 
+
+= Stops
+
+Stored inside each train.
+
+Instance variables:
+
+stop.station :: Symbol representing the station name
+stop.time :: Time object with the time the train stops there
+
+Instance methods:
+
+stop.in_time?(time) :: True if time is less than stop.time
+
+Class methods:
+
+Stop.pretty_print(station) :: Converts the station symbol to something human readable - EG: :irving_park becomes "Irving Park"
 = Line Data
 
 Current supported lines:
