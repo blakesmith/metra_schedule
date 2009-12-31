@@ -14,6 +14,7 @@ module MetraSchedule
       @line_key = line_name
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
+      @filters = [:filter_by_stop, :filter_by_start, :filter_by_direction, :filter_by_schedule]
     end
 
     def load_schedule
@@ -146,11 +147,8 @@ module MetraSchedule
 
     def trains
       return [] unless engines
-      filtered_engines = engines.find_all do |engine|
-        filter_by_stop.include?(engine) and \
-          filter_by_start.include?(engine) and \
-          filter_by_direction.include?(engine) and \
-          filter_by_schedule.include?(engine)
+      filtered_engines = @filters.inject(engines) do |engines, fun|
+        eval("#{fun}(engines)")
       end
       inject_my_times(filtered_engines)
     end
@@ -165,7 +163,7 @@ module MetraSchedule
       end
     end
 
-    def filter_by_stop
+    def filter_by_stop(engines)
       if @start and not @destination
         engines.find_all { |e| e.has_stop?(@start) }
       elsif @destination and not @start
@@ -177,21 +175,21 @@ module MetraSchedule
       end
     end
 
-    def filter_by_start
+    def filter_by_start(engines)
       return engines unless @time and @start
       engines.find_all do |engine|
         engine.in_time?(@start, @time)
       end
     end
 
-    def filter_by_direction
+    def filter_by_direction(engines)
       return engines if deduce_direction == :unknown
       engines.find_all do |engine|
         engine.direction == deduce_direction
       end
     end
 
-    def filter_by_schedule
+    def filter_by_schedule(engines)
       return engines unless @sched
       engines.find_all do |engine|
         if @sched == :holiday or @sched == :sunday
