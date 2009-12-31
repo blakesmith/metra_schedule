@@ -17,6 +17,13 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_cache_params
+    line = Metra.new.line(:up_nw)
+    line.config :cacher => :tokyo, :cache_dir => '/home/blake/.metra_scheudule'
+    assert_equal(:tokyo, line.cacher)
+    assert_equal('/home/blake/.metra_scheudule', line.cache_dir)
+  end
+
   def test_has_name_and_url
     line = Metra.new.line(:up_nw)
     assert_equal("Union Pacific Northwest", line.name)

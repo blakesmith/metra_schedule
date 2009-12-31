@@ -4,6 +4,7 @@ module MetraSchedule
   class Line
     include MetraSchedule::TrainData
 
+    attr_reader :cacher, :cache_dir 
     attr_reader :line_key, :name, :url, :dir, :sched, :start, :destination, :time
     attr_accessor :engines
 
@@ -15,6 +16,11 @@ module MetraSchedule
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
       @filters = [filter_by_stop, filter_by_start, filter_by_direction, filter_by_schedule, inject_my_times]
+    end
+
+    def config(args)
+      @cacher = args[:cacher] if args.has_key?(:cacher)
+      @cache_dir = args[:cache_dir] if args.has_key?(:cache_dir)
     end
 
     def load_schedule
