@@ -2,13 +2,13 @@ Gem::Specification.new do |s|
   s.name = %q{metra_schedule}
   s.version = "0.2.1.1"
   s.has_rdoc = true
-  s.date = %q{2009-12-30}
+  s.date = %q{2009-12-31}
   s.authors = ["Blake Smith"]
   s.email = %q{blakesmith0@gmail.com}
   s.summary = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule.}
   s.homepage = %q{http://github.com/blakesmith/metra_schedule}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule.}
-  s.files = ["Rakefile", "LICENSE", "README.rdoc", "lib/metra.rb", "lib/metra/cacher.rb", "lib/metra/classmethods.rb", "lib/metra/line.rb", "lib/metra/parser.rb", "lib/metra/stop.rb", "lib/metra/train.rb", "lib/metra/train_data.rb", "test/fixture/UP_NW.html", "test/test_cacher.rb", "test/test_line.rb", "test/test_metra.rb", "test/test_parser.rb", "test/test_stop.rb", "test/test_train.rb"]
+  s.files = ["Rakefile", "LICENSE", "README.rdoc", "lib/metra.rb", "lib/metra/cacher.rb", "lib/metra/classmethods.rb", "lib/metra/line.rb", "lib/metra/parser.rb", "lib/metra/stop.rb", "lib/metra/train.rb", "lib/metra/train_data.rb", "test/test_helper.rb", "test/fixture/UP_NW.html", "test/unit/test_cacher.rb", "test/unit/test_line.rb", "test/unit/test_metra.rb", "test/unit/test_parser.rb", "test/unit/test_stop.rb", "test/unit/test_train.rb", "test/functional/test_all_filters.rb", "test/integration/test_line_integration.rb"]
 
 
   if s.respond_to? :specification_version then
