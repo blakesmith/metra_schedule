@@ -1,5 +1,4 @@
-require 'test/unit'
-require File.join(File.dirname(__FILE__), "../lib", "metra")
+require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
 
 class TestLine < Test::Unit::TestCase
 

@@ -1,11 +1,10 @@
-require 'test/unit'
-require File.join(File.dirname(__FILE__), "../lib", "metra")
+require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
 
 class TestLine < Test::Unit::TestCase
   include MetraSchedule::TrainData
 
   def up_nw_stub
-    f = File.open(File.join(File.dirname(__FILE__), 'fixture/UP_NW.html'), 'r')
+    f = File.open(File.join(File.dirname(__FILE__), '../fixture/UP_NW.html'), 'r')
     parser = MetraSchedule::Parser.new f
     parser.line = LINES[:up_nw]
     parser.scrape

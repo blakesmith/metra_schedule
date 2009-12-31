@@ -1,7 +1,4 @@
-require 'test/unit'
-require 'date'
-require File.join(File.dirname(__FILE__), "../lib", "metra")
-require File.join(File.dirname(__FILE__), "timecop", "lib", "timecop")
+require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
 
 class TestLine < Test::Unit::TestCase
 
