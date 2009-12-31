@@ -94,4 +94,51 @@ class TestLine < Test::Unit::TestCase
     assert_equal(nil, train.my_arrival)
   end
 
+  def test_my_travel_time
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("1:30PM")
+    assert_equal(60, train.my_travel_time)
+  end
+
+  def test_my_travel_time_nil
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    assert_equal(nil, train.my_travel_time)
+  end
+
+  def test_print_my_travel_time_minutes
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("1:29PM")
+    assert_equal("59 minutes", train.print_my_travel_time)
+  end
+
+  def test_print_my_travel_time_one_hour
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("1:30PM")
+    assert_equal("1 hour", train.print_my_travel_time)
+  end
+
+  def test_print_my_travel_time_one_hour_and_minutes
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("1:35PM")
+    assert_equal("1 hour 5 minutes", train.print_my_travel_time)
+  end
+
+  def test_print_my_travel_time_two_hours
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("2:30PM")
+    assert_equal("2 hours", train.print_my_travel_time)
+  end
+
+  def test_print_my_travel_time_two_hours_and_minutes
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.my_arrival = Time.parse("2:35PM")
+    assert_equal("2 hours 5 minutes", train.print_my_travel_time)
+  end
+
 end

@@ -39,5 +39,35 @@ module MetraSchedule
       {:departure => departure, :arrival => arrival}
     end
 
+    def my_travel_time
+      return nil unless @my_departure and @my_arrival
+      (@my_arrival.to_i - @my_departure.to_i) / 60
+    end
+
+    def print_my_travel_time
+      if my_travel_time
+        hours = (my_travel_time / 60.0).floor
+        if hours > 0
+          minutes = my_travel_time - (60 * hours)
+          if hours == 1
+            if minutes != 0
+              return "#{hours} hour #{minutes} minutes"
+            else
+              return "#{hours} hour"
+            end
+          else
+            if minutes != 0
+              return "#{hours} hours #{minutes} minutes"
+            else
+              return "#{hours} hours"
+            end
+          end
+        else
+          minutes = my_travel_time
+          return "#{minutes} minutes"
+        end
+      end
+    end
+
   end
 end
