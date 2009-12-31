@@ -41,7 +41,9 @@ module MetraSchedule
 
     def my_travel_time
       return nil unless @my_departure and @my_arrival
-      (@my_arrival.to_i - @my_departure.to_i) / 60
+      minutes = (@my_arrival.to_i - @my_departure.to_i) / 60
+      return minutes if minutes > 0
+      return minutes + 1440 if minutes < 0
     end
 
     def print_my_travel_time

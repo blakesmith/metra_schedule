@@ -106,6 +106,16 @@ class TestLine < Test::Unit::TestCase
     assert_equal(nil, train.my_travel_time)
   end
 
+  def test_my_travel_time_one_day_into_next
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("11:30PM")
+    train.my_arrival = Time.parse("12:30AM")
+    assert_equal(60, train.my_travel_time)
+
+    train.my_arrival = Time.parse("1:30AM")
+    assert_equal(120, train.my_travel_time)
+  end
+
   def test_print_my_travel_time_minutes
     train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
     train.my_departure = Time.parse("12:30PM")
