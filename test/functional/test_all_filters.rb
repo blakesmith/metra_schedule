@@ -18,4 +18,5 @@ class TestLine < Test::Unit::TestCase
     line = up_nw_stub.from(:ogilve).to(:barrington).at(Time.parse("3:00AM")).on(Date.parse("Dec 27 2009"))
     assert_equal(7, line.trains.count)
   end
+
 end
