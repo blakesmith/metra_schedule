@@ -310,4 +310,15 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:sunday, line.deduce_schedule.sched)
   end
 
+  def test_find_train_by_train_num
+    line = Metra.new.line(:up_nw)
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+    train1 = MetraSchedule::Train.new :train_num => 642, :direction => :inbound, :stops => [stop1, stop2], :schedule => :weekday
+    train2 = MetraSchedule::Train.new :train_num => 631, :direction => :outbound, :stops => [stop1, stop2], :schedule => :holiday
+    line.engines = [train1, train2]
+
+    assert_equal(train1, line.find_train_by_train_num(642))
+  end
+
 end

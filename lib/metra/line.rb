@@ -151,6 +151,10 @@ module MetraSchedule
       self
     end
 
+    def find_train_by_train_num(train_num)
+      @engines.find {|e| e.train_num == train_num}
+    end
+
     def trains
       return [] unless engines
       @filters.inject(engines) { |e, fun| fun.call(e) }.sort
