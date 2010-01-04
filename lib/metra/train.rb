@@ -52,6 +52,20 @@ module MetraSchedule
       end
     end
 
+    def <=>(other)
+      if my_departure
+        return 1 if self.my_departure > other.my_departure
+        return -1 if self.my_departure < other.my_departure
+        return 0 if self.my_departure == other.my_departure
+      elsif @stops.first and other.stops.first
+        return 1 if @stops.first.time > other.stops.first.time
+        return -1 if @stops.first.time < other.stops.first.time
+        return 0 if @stops.first.time == other.stops.first.time
+      else
+        0
+      end
+    end
+
     private 
 
     def my_travel_hours

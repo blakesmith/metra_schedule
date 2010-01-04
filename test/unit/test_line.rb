@@ -146,6 +146,20 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:inbound, line.from(:barrington).to(:ogilve).deduce_direction)
   end
 
+  def test_trains_sorted_by_departure_time
+    line = Metra.new.line(:up_nw)
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:40')
+    stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop3], :direction => :outbound, :schedule => :weekday
+    train2 = MetraSchedule::Train.new :stops => [stop2, stop3], :direction => :outbound, :schedule => :weekday
+    line.engines = [train2, train1]
+
+    valid_trains = line.outbound.trains
+    assert_equal([train1, train2], valid_trains)
+  end
+
   def test_trains_filter_by_station
     line = Metra.new.line(:up_nw)
 

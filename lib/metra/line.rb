@@ -153,9 +153,7 @@ module MetraSchedule
 
     def trains
       return [] unless engines
-      @filters.inject(engines) do |e, fun|
-        fun.call(e)
-      end
+      @filters.inject(engines) { |e, fun| fun.call(e) }.sort
     end
 
     private
