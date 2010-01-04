@@ -1,5 +1,7 @@
 = metra_schedule: A library to access the Chicago Metra schedule information as Ruby objects.
 
+This is the data library that powers http://metra.blakesmith.me
+
 Supported Lines:
   Union Pacific Northwest => :up_nw
   Union Pacific North => :up_n
