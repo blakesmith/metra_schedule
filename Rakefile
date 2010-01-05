@@ -31,6 +31,7 @@ begin
     gemspec.email = "blakesmith0@gmail.com"
     gemspec.homepage = "http://github.com/blakesmith/metra_schedule"
     gemspec.authors = ["Blake Smith"]
+    gemspec.add_dependency('nokogiri', '>=1.4.1')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"
