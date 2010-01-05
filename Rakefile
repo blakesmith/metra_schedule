@@ -21,3 +21,18 @@ Rake::TestTask.new(:test_integrations) do |t|
   t.test_files = FileList['test/integration/test*.rb']
   t.warning = false
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "metra_schedule"
+    gemspec.summary = "Chicago Metra parser and scheduler"
+    gemspec.description = "metra_schedule provides a ruby object interface to the Chicago metra train schedule"
+    gemspec.email = "blakesmith0@gmail.com"
+    gemspec.homepage = "http://github.com/blakesmith/metra_schedule"
+    gemspec.authors = ["Blake Smith"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end
+
