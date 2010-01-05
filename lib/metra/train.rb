@@ -36,7 +36,7 @@ module MetraSchedule
     def departure_and_arrival(start, destination)
       departure = @stops.find {|s| s.station == start}.time
       arrival = @stops.find {|s| s.station == destination}.time
-      {:departure => departure, :arrival => arrival}
+      {:departure => departure.to_today, :arrival => arrival.to_today}
     end
 
     def my_travel_time
@@ -87,7 +87,6 @@ module MetraSchedule
       return "#{my_travel_minutes} minute" if my_travel_minutes == 1
       return "#{my_travel_minutes} minutes" if my_travel_minutes > 1
     end
-
 
   end
 end
