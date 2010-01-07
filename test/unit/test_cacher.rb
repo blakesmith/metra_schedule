@@ -76,4 +76,21 @@ class TestLine < Test::Unit::TestCase
     cleanup_dir
   end
 
+  def test_persist_delay
+    cleanup_dir
+    c = MetraSchedule::Cacher.new
+    data = [{:train_num => 800, :delay => (15..30)}]
+    assert_equal(true, c.persist_delay(data))
+    cleanup_dir
+  end
+
+  def test_retrieve_delay
+    cleanup_dir
+    c = MetraSchedule::Cacher.new
+    data = [{:train_num => 800, :delay => (15..30)}]
+    c.persist_delay(data)
+    assert_equal(data, c.retrieve_delay)
+    cleanup_dir
+  end
+
 end

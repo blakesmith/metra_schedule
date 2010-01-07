@@ -3,10 +3,11 @@ require 'fileutils'
 module MetraSchedule
   class Cacher
     
-    attr_accessor :cache_dir
+    attr_accessor :cache_dir, :delays
 
     def initialize
       @cache_dir = "#{ENV['HOME']}/.metra_schedule"
+      @delay_file = 'delays'
     end
 
     def self.load_from_cache(line)
@@ -43,6 +44,11 @@ module MetraSchedule
       end
     end
 
+    def delay_exists?
+      return true if File.exists?(File.join(@cache_dir, @delay_file))
+      false
+    end
+
     def persist_line(line)
       create_cache_dir_if_not_exists
       return false unless line.engines
@@ -52,6 +58,20 @@ module MetraSchedule
     def retrieve_line(line)
       if line_exists?(line)
         File.open(File.join(@cache_dir, line.line_key.to_s), 'r') {|f| Marshal.load(f)}
+      else
+        nil
+      end
+    end
+
+    def persist_delay(delays)
+      create_cache_dir_if_not_exists
+      return false unless delays
+      true if File.open(File.join(@cache_dir, @delay_file), 'w') {|f| Marshal.dump(delays, f)}
+    end
+
+    def retrieve_delay
+      if delay_exists?
+        File.open(File.join(@cache_dir, @delay_file), 'r') {|f| Marshal.load(f)}
       else
         nil
       end

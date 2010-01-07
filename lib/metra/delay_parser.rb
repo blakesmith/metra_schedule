@@ -3,11 +3,13 @@ require 'open-uri'
 
 module MetraSchedule
   class DelayParser
-    attr_reader :html_doc
+    attr_reader :html_doc, :url
     attr_accessor :line
 
-    def initialize(html_doc)
-      @html_doc = html_doc
+    def initialize(html_doc=nil)
+      @url = "http://metrarail.com/content/metra/en/home/service_updates/service_updates_alerts.html"
+      @html_doc = @url unless html_doc
+      @html_doc = html_doc if html_doc
     end
 
     def scrape
