@@ -3,8 +3,15 @@ require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
 class TestDelayParser < Test::Unit::TestCase
   include MetraSchedule::TrainData
 
-  def up_nw_stub
+  def advisory_alert_stub
     f = File.open(File.join(File.dirname(__FILE__), '../fixture/service_updates_alerts.html'), 'r')
+    parser = MetraSchedule::DelayParser.new f
+    parser.scrape
+    parser
+  end
+
+  def no_advisory_stub
+    f = File.open(File.join(File.dirname(__FILE__), '../fixture/service_updates_alerts_no_advisories.html'), 'r')
     parser = MetraSchedule::DelayParser.new f
     parser.scrape
     parser
@@ -14,18 +21,27 @@ class TestDelayParser < Test::Unit::TestCase
     assert_nothing_raised do
       @@p = MetraSchedule::DelayParser.new 'http://blake.com'
     end
-    assert_not_nil(up_nw_stub.html_doc)
+    assert_not_nil(advisory_alert_stub.html_doc)
     assert_not_nil(@@p.html_doc)
   end
 
   def test_find_train_num
-    node = up_nw_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
-    assert_equal(815, up_nw_stub.find_train_num(node))
+    node = advisory_alert_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
+    assert_equal(815, advisory_alert_stub.find_train_num(node))
   end
 
   def test_find_delay_range
-    node = up_nw_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
-    assert_equal((15..20), up_nw_stub.find_delay_range(node))
+    node = advisory_alert_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
+    assert_equal((15..20), advisory_alert_stub.find_delay_range(node))
+  end
+
+  def test_make_train_delays
+    assert_equal([{:train_num => 815, :delay => (15..20)}], advisory_alert_stub.make_train_delays)
+  end
+
+  def test_has_delays?
+    assert_equal(true, advisory_alert_stub.has_delays?)
+    assert_equal(false, no_advisory_stub.has_delays?)
   end
 
 end
