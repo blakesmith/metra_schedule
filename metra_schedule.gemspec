@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{metra_schedule}
-  s.version = "0.2.2"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Blake Smith"]
-  s.date = %q{2010-01-05}
+  s.date = %q{2010-01-07}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule}
   s.email = %q{blakesmith0@gmail.com}
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/metra.rb",
      "lib/metra/cacher.rb",
      "lib/metra/classmethods.rb",
+     "lib/metra/delay_parser.rb",
      "lib/metra/extensions/time_extension.rb",
      "lib/metra/line.rb",
      "lib/metra/parser.rb",
@@ -33,6 +34,8 @@ Gem::Specification.new do |s|
      "lib/metra/train_data.rb",
      "metra_schedule.gemspec",
      "test/fixture/UP_NW.html",
+     "test/fixture/service_updates_alerts.html",
+     "test/fixture/service_updates_alerts_no_advisories.html",
      "test/functional/test_all_filters.rb",
      "test/integration/test_line_integration.rb",
      "test/test_helper.rb",
@@ -46,6 +49,7 @@ Gem::Specification.new do |s|
      "test/timecop/lib/timecop/time_stack_item.rb",
      "test/timecop/lib/timecop/timecop.rb",
      "test/unit/test_cacher.rb",
+     "test/unit/test_delay_parser.rb",
      "test/unit/test_line.rb",
      "test/unit/test_metra.rb",
      "test/unit/test_parser.rb",
@@ -71,6 +75,7 @@ Gem::Specification.new do |s|
      "test/unit/test_metra.rb",
      "test/unit/test_stop.rb",
      "test/unit/test_parser.rb",
+     "test/unit/test_delay_parser.rb",
      "test/unit/test_cacher.rb",
      "test/test_helper.rb"
   ]
