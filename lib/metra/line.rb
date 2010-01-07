@@ -30,6 +30,10 @@ module MetraSchedule
       else
         @engines = cached_engines
       end
+      if MetraSchedule::Cacher.new.delays_exist?
+        @filters << inject_delays
+      end
+      self
     end
 
     def update_schedule
@@ -169,6 +173,18 @@ module MetraSchedule
           engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
           engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
         end
+      end
+    end
+
+    def inject_delays
+      lambda do |engines|
+        delays = MetraSchedule::Cacher.new.retrieve_delays
+        delays.each do |d|
+          if engines.any? {|e| e.train_num == d[:train_num] }
+            find_train_by_train_num(d[:train_num]).delay = d[:delay]
+          end
+        end
+        engines
       end
     end
 

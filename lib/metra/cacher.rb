@@ -44,7 +44,7 @@ module MetraSchedule
       end
     end
 
-    def delay_exists?
+    def delays_exist?
       return true if File.exists?(File.join(@cache_dir, @delay_file))
       false
     end
@@ -63,14 +63,14 @@ module MetraSchedule
       end
     end
 
-    def persist_delay(delays)
+    def persist_delays(delays)
       create_cache_dir_if_not_exists
       return false unless delays
       true if File.open(File.join(@cache_dir, @delay_file), 'w') {|f| Marshal.dump(delays, f)}
     end
 
-    def retrieve_delay
-      if delay_exists?
+    def retrieve_delays
+      if delays_exist?
         File.open(File.join(@cache_dir, @delay_file), 'r') {|f| Marshal.load(f)}
       else
         nil
