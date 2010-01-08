@@ -63,21 +63,21 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Chicago Metra parser and scheduler}
   s.test_files = [
-    "test/integration/test_line_integration.rb",
-     "test/functional/test_all_filters.rb",
+    "test/timecop/lib/timecop.rb",
+     "test/timecop/lib/timecop/time_extensions.rb",
      "test/timecop/lib/timecop/time_stack_item.rb",
      "test/timecop/lib/timecop/timecop.rb",
-     "test/timecop/lib/timecop/time_extensions.rb",
-     "test/timecop/lib/timecop.rb",
-     "test/unit/test_time_extension.rb",
-     "test/unit/test_train.rb",
+     "test/functional/test_all_filters.rb",
+     "test/integration/test_line_integration.rb",
+     "test/test_helper.rb",
+     "test/unit/test_cacher.rb",
+     "test/unit/test_delay_parser.rb",
      "test/unit/test_line.rb",
      "test/unit/test_metra.rb",
-     "test/unit/test_stop.rb",
      "test/unit/test_parser.rb",
-     "test/unit/test_delay_parser.rb",
-     "test/unit/test_cacher.rb",
-     "test/test_helper.rb"
+     "test/unit/test_stop.rb",
+     "test/unit/test_time_extension.rb",
+     "test/unit/test_train.rb"
   ]
 
   if s.respond_to? :specification_version then
