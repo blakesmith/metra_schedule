@@ -42,26 +42,6 @@ module MetraSchedule
       end
     end
 
-    def print_my_delay
-      return unless @delay
-      if @delay.is_a?(Range)
-        "#{@delay.first} - #{@delay.last} minute delay"
-      elsif @delay.is_a?(Fixnum)
-        "#{@delay} minute delay"
-      end
-    end
-
-    def departure_with_delay
-      return my_departure unless @delay
-      if @delay.is_a?(Range)
-        my_departure + (60 * @delay.first)
-      elsif @delay.is_a?(Fixnum)
-        my_departure + (60 * @delay)
-      else
-        my_departure
-      end
-    end
-
     def <=>(other)
       if my_departure
         return 1 if self.my_departure > other.my_departure
