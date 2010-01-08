@@ -24,6 +24,13 @@ class TestDelayParser < Test::Unit::TestCase
     parser
   end
 
+  def no_delay_advisory
+    f = File.open(File.join(File.dirname(__FILE__), '../fixture/service_updates_alerts_multiple_with_non_delay.html'), 'r')
+    parser = MetraSchedule::DelayParser.new f
+    parser.scrape
+    parser
+  end
+
   def test_init
     assert_nothing_raised do
       @@p = MetraSchedule::DelayParser.new 'http://blake.com'
@@ -37,13 +44,13 @@ class TestDelayParser < Test::Unit::TestCase
     assert_equal(2156, advisory_alert_stub.find_train_num(node))
   end
 
-  def test_find_delay_range
+  def test_find_delay
     node = advisory_alert_stub.html_doc.css('#serviceAdvisory')
-    assert_equal((18..20), advisory_alert_stub.find_delay_range(node))
+    assert_equal("20 minutes delayed", advisory_alert_stub.find_delay(node))
   end
 
   def test_make_train_delays
-    assert_equal([{:train_num => 2156, :delay => (18..20)}], advisory_alert_stub.make_train_delays)
+    assert_equal([{:train_num => 2156, :delay => "18 - 20 minutes delayed"}], advisory_alert_stub.make_train_delays)
   end
 
   def test_has_delays?
@@ -52,15 +59,18 @@ class TestDelayParser < Test::Unit::TestCase
   end
 
   def test_find_delay_no_range
-    node = no_range_stub.html_doc.css('#serviceAdvisory')
-    assert_equal(15, no_range_stub.find_delay_no_range(node))
+    node = no_range_stub.html_doc.css('#serviceAdvisory dd.first')
+    assert_equal("15 Minute Delay", no_range_stub.find_delay(node))
   end
 
   def test_find_delay
-    node = advisory_alert_stub.html_doc.css('#serviceAdvisory')
-    assert_equal((18..20), advisory_alert_stub.find_delay(node))
-    node = no_range_stub.html_doc.css('#serviceAdvisory')
-    assert_equal(15, no_range_stub.find_delay(node))
+    node = advisory_alert_stub.html_doc.css('#serviceAdvisory dd.first')
+    assert_equal("18 - 20 minutes delayed", advisory_alert_stub.find_delay(node))
+  end
+
+  def test_find_delay_advisory_with_no_delay
+    node = no_delay_advisory.html_doc.css('#serviceAdvisory dd.first')
+    assert_equal("Stopped North of Ashburn", no_delay_advisory.find_delay(node))
   end
 
 end

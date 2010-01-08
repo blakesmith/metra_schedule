@@ -36,27 +36,11 @@ module MetraSchedule
     end
 
     def find_delay(node)
-      if find_delay_range(node)
-        find_delay_range(node)
-      else
-        find_delay_no_range(node)
-      end
+      text_array = node.text.delete("\r\n").split("\s")[3..-1]
+      text_array.delete_at(0) if text_array[0] == "-"
+      text_array.join("\s").strip
     end
     
-    def find_delay_range(node)
-      match = node.text.scan(/([0-9]+) - ([0-9]+)/)
-      unless match.empty?
-        (match.first[0].to_i..match.first[1].to_i)
-      end
-    end
-
-    def find_delay_no_range(node)
-      match = node.text.scan(/([0-9]+)\s*?Minute/)
-      if match
-        match.first.first.to_i
-      end
-    end
-
     def has_delays?
       @html_doc.css('#serviceAdvisory').count > 0
     end
