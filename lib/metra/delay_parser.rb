@@ -7,7 +7,8 @@ module MetraSchedule
     attr_accessor :line
 
     def initialize(html_doc=nil)
-      @url = "http://metrarail.com/content/metra/en/home/service_updates/service_updates_alerts.html"
+      time = Time.now.to_i
+      @url = "http://metrarail.com/content/metra/en/home/service_updates/service_updates_alerts/jcr:content/serviceAdvisory.display.html?t=#{time}"
       @html_doc = @url unless html_doc
       @html_doc = html_doc if html_doc
     end
