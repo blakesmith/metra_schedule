@@ -211,7 +211,11 @@ module MetraSchedule
       lambda do |engines|
         return engines unless @time and @start
         engines.find_all do |engine|
-          engine.in_time?(@start, @time)
+          if @del_threshold and engine.delay
+            engine.in_time?(@start, @time - (60 * @del_threshold))
+          else
+            engine.in_time?(@start, @time)
+          end
         end
       end
     end
