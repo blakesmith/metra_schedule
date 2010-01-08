@@ -1,7 +1,7 @@
 module MetraSchedule
   class Train
     attr_reader :train_num, :schedule, :bike_limit, :direction, :stops
-    attr_accessor :my_departure, :my_arrival, :delay # Injected when the line is filtered
+    attr_accessor :my_departure, :my_arrival, :delay, :del_threshold # Injected when the line is filtered
 
     def initialize(options={})
       unless options.empty?
@@ -27,6 +27,12 @@ module MetraSchedule
       departure = @stops.find {|s| s.station == start}.time
       arrival = @stops.find {|s| s.station == destination}.time
       {:departure => departure.to_today, :arrival => arrival.to_today}
+    end
+
+    def departure_with_delay
+      if @my_departure
+        @my_departure + (60 * @del_threshold)
+      end
     end
 
     def my_travel_time

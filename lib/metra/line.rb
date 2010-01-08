@@ -186,7 +186,9 @@ module MetraSchedule
         delays = MetraSchedule::Cacher.new.retrieve_delays
         delays.each do |d|
           if engines.any? {|e| e.train_num == d[:train_num] }
-            find_train_by_train_num(d[:train_num]).delay = d[:delay]
+            train = find_train_by_train_num(d[:train_num])
+            train.delay = d[:delay]
+            train.del_threshold = @del_threshold if @del_threshold
           end
         end
         engines

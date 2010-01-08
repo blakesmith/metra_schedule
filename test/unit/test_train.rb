@@ -165,4 +165,11 @@ class TestLine < Test::Unit::TestCase
     assert_equal("2 hours 5 minutes", train.print_my_travel_time)
   end
 
+  def test_departure_with_delay
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.my_departure = Time.parse("12:30PM")
+    train.del_threshold = 5
+    assert_equal(Time.parse("12:35PM"), train.departure_with_delay)
+  end
+
 end
