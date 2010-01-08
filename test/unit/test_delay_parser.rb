@@ -26,17 +26,17 @@ class TestDelayParser < Test::Unit::TestCase
   end
 
   def test_find_train_num
-    node = advisory_alert_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
-    assert_equal(815, advisory_alert_stub.find_train_num(node))
+    node = advisory_alert_stub.html_doc.css('#serviceAdvisory')
+    assert_equal(2156, advisory_alert_stub.find_train_num(node))
   end
 
   def test_find_delay_range
-    node = advisory_alert_stub.html_doc.xpath('/html/body/div[2]/div[5]/div[2]/div/div[2]/div/dl/dd')
-    assert_equal((15..20), advisory_alert_stub.find_delay_range(node))
+    node = advisory_alert_stub.html_doc.css('#serviceAdvisory')
+    assert_equal((18..20), advisory_alert_stub.find_delay_range(node))
   end
 
   def test_make_train_delays
-    assert_equal([{:train_num => 815, :delay => (15..20)}], advisory_alert_stub.make_train_delays)
+    assert_equal([{:train_num => 2156, :delay => (18..20)}], advisory_alert_stub.make_train_delays)
   end
 
   def test_has_delays?
