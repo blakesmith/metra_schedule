@@ -5,7 +5,7 @@ module MetraSchedule
     include MetraSchedule::TrainData
 
     attr_reader :cacher, :cache_dir 
-    attr_reader :line_key, :name, :url, :dir, :sched, :start, :destination, :time
+    attr_reader :line_key, :name, :url, :dir, :sched, :start, :destination, :time, :del_threshold
     attr_accessor :engines
 
     def initialize(line_name)
@@ -154,6 +154,11 @@ module MetraSchedule
 
     def find_train_by_train_num(train_num)
       @engines.find {|e| e.train_num == train_num}
+    end
+
+    def delay_threshold(minutes)
+      @del_threshold = minutes if minutes
+      self
     end
 
     def trains

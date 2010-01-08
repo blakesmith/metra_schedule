@@ -326,4 +326,10 @@ class TestLine < Test::Unit::TestCase
     assert_equal(train1, line.find_train_by_train_num(642))
   end
 
+  def test_delay_threshold
+    line = Metra.new.line(:up_nw)
+    line.delay_threshold(5)
+    assert_equal(5, line.del_threshold)
+  end
+
 end
