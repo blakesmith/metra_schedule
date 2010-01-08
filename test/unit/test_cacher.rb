@@ -99,8 +99,9 @@ class TestLine < Test::Unit::TestCase
     data = [{:train_num => 800, :delay => (15..30)}]
     c.persist_delays(data)
     assert_equal(true, c.delays_exist?)
-    c.clear_delays
+    assert_equal(true, c.clear_delays)
     assert_equal(false, c.delays_exist?)
+    assert_equal(false, c.clear_delays)
     cleanup_dir
   end
 

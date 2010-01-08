@@ -50,7 +50,12 @@ module MetraSchedule
     end
 
     def clear_delays
-      FileUtils.rm(File.join(@cache_dir, @delay_file))
+      begin
+        FileUtils.rm(File.join(@cache_dir, @delay_file))
+        true
+      rescue
+        false
+      end
     end
 
     def persist_line(line)
