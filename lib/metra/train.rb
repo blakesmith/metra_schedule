@@ -42,6 +42,15 @@ module MetraSchedule
       end
     end
 
+    def print_my_delay
+      return unless @delay
+      if @delay.is_a?(Range)
+        "#{@delay.first} - #{@delay.last} minute delay"
+      elsif @delay.is_a?(Fixnum)
+        "#{@delay} minute delay"
+      end
+    end
+
     def departure_with_delay
       return my_departure unless @delay
       if @delay.is_a?(Range)

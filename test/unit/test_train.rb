@@ -180,4 +180,16 @@ class TestLine < Test::Unit::TestCase
     assert_equal(Time.parse("12:30PM"), train.departure_with_delay)
   end
 
+  def test_print_my_delay_range
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.delay = (10..15)
+    assert_equal("10 - 15 minute delay", train.print_my_delay)
+  end
+
+  def test_print_my_delay_fixnum
+    train = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound
+    train.delay = 15
+    assert_equal("15 minute delay", train.print_my_delay)
+  end
+
 end
