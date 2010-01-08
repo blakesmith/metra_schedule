@@ -30,9 +30,6 @@ module MetraSchedule
       else
         @engines = cached_engines
       end
-      if MetraSchedule::Cacher.new.delays_exist?
-        @filters << inject_delays
-      end
       self
     end
 
@@ -161,6 +158,9 @@ module MetraSchedule
 
     def trains
       return [] unless engines
+      if MetraSchedule::Cacher.new.delays_exist?
+        @filters.insert(0, inject_delays)
+      end
       @filters.inject(engines) { |e, fun| fun.call(e) }.sort
     end
 
@@ -184,7 +184,7 @@ module MetraSchedule
             find_train_by_train_num(d[:train_num]).delay = d[:delay]
           end
         end
-        filter_by_start.call(engines) # Factor in the delay start time
+        engines
       end
     end
 
