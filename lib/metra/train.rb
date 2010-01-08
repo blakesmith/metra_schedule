@@ -44,7 +44,13 @@ module MetraSchedule
 
     def departure_with_delay
       return my_departure unless @delay
-      my_departure + (60 * @delay.first)
+      if @delay.is_a?(Range)
+        my_departure + (60 * @delay.first)
+      elsif @delay.is_a?(Fixnum)
+        my_departure + (60 * @delay)
+      else
+        my_departure
+      end
     end
 
     def <=>(other)

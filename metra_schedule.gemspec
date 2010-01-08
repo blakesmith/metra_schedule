@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Blake Smith"]
-  s.date = %q{2010-01-07}
+  s.date = %q{2010-01-08}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule}
   s.email = %q{blakesmith0@gmail.com}
   s.extra_rdoc_files = [
@@ -36,6 +36,7 @@ Gem::Specification.new do |s|
      "test/fixture/UP_NW.html",
      "test/fixture/service_updates_alerts.html",
      "test/fixture/service_updates_alerts_no_advisories.html",
+     "test/fixture/service_updates_alerts_no_range.html",
      "test/functional/test_all_filters.rb",
      "test/integration/test_line_integration.rb",
      "test/test_helper.rb",
@@ -63,21 +64,21 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Chicago Metra parser and scheduler}
   s.test_files = [
-    "test/timecop/lib/timecop.rb",
-     "test/timecop/lib/timecop/time_extensions.rb",
+    "test/integration/test_line_integration.rb",
+     "test/functional/test_all_filters.rb",
      "test/timecop/lib/timecop/time_stack_item.rb",
      "test/timecop/lib/timecop/timecop.rb",
-     "test/functional/test_all_filters.rb",
-     "test/integration/test_line_integration.rb",
-     "test/test_helper.rb",
-     "test/unit/test_cacher.rb",
-     "test/unit/test_delay_parser.rb",
+     "test/timecop/lib/timecop/time_extensions.rb",
+     "test/timecop/lib/timecop.rb",
+     "test/unit/test_time_extension.rb",
+     "test/unit/test_train.rb",
      "test/unit/test_line.rb",
      "test/unit/test_metra.rb",
-     "test/unit/test_parser.rb",
      "test/unit/test_stop.rb",
-     "test/unit/test_time_extension.rb",
-     "test/unit/test_train.rb"
+     "test/unit/test_parser.rb",
+     "test/unit/test_delay_parser.rb",
+     "test/unit/test_cacher.rb",
+     "test/test_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
