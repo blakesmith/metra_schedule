@@ -17,6 +17,13 @@ class TestDelayParser < Test::Unit::TestCase
     parser
   end
 
+  def no_range_stub
+    f = File.open(File.join(File.dirname(__FILE__), '../fixture/service_updates_alerts_no_range.html'), 'r')
+    parser = MetraSchedule::DelayParser.new f
+    parser.scrape
+    parser
+  end
+
   def test_init
     assert_nothing_raised do
       @@p = MetraSchedule::DelayParser.new 'http://blake.com'
@@ -42,6 +49,18 @@ class TestDelayParser < Test::Unit::TestCase
   def test_has_delays?
     assert_equal(true, advisory_alert_stub.has_delays?)
     assert_equal(false, no_advisory_stub.has_delays?)
+  end
+
+  def test_find_delay_no_range
+    node = no_range_stub.html_doc.css('#serviceAdvisory')
+    assert_equal(15, no_range_stub.find_delay_no_range(node))
+  end
+
+  def test_find_delay
+    node = advisory_alert_stub.html_doc.css('#serviceAdvisory')
+    assert_equal((18..20), advisory_alert_stub.find_delay(node))
+    node = no_range_stub.html_doc.css('#serviceAdvisory')
+    assert_equal(15, no_range_stub.find_delay(node))
   end
 
 end

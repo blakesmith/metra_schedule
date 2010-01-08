@@ -27,17 +27,34 @@ module MetraSchedule
     def make_train_delays
       return unless has_delays?
       all_advisories.inject([]) do |total, node|
-        total << {:train_num => find_train_num(node), :delay => find_delay_range(node)}
+        total << {:train_num => find_train_num(node), :delay => find_delay(node)}
       end
     end
 
     def find_train_num(node)
       node.text.scan(/#([0-9]+)/).first.first.to_i
     end
+
+    def find_delay(node)
+      if find_delay_range(node)
+        find_delay_range(node)
+      else
+        find_delay_no_range(node)
+      end
+    end
     
     def find_delay_range(node)
       match = node.text.scan(/([0-9]+) - ([0-9]+)/)
-      (match.first[0].to_i..match.first[1].to_i)
+      unless match.empty?
+        (match.first[0].to_i..match.first[1].to_i)
+      end
+    end
+
+    def find_delay_no_range(node)
+      match = node.text.scan(/([0-9]+)\s*?Minute/)
+      if match
+        match.first.first.to_i
+      end
     end
 
     def has_delays?
