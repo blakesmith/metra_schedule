@@ -1,4 +1,9 @@
 require File.join(File.dirname(__FILE__), "../", "test_helper.rb")
+begin
+  require 'mocha'
+rescue
+  puts "Not all the tests may function properly without Mocha installed. gem install mocha"
+end
 
 class TestLine < Test::Unit::TestCase
 
@@ -187,6 +192,24 @@ class TestLine < Test::Unit::TestCase
 
     valid_trains = line.to(:ogilve).from(:arlington_heights).at('12:35').trains
     assert_equal([train2], valid_trains)
+  end
+
+  def test_trains_filter_by_start_with_delays
+    line = Metra.new.line(:up_nw)
+    MetraSchedule::Cacher.any_instance.stubs(:delays_exist?).returns(true)
+    MetraSchedule::Cacher.any_instance.stubs(:retrieve_delays).returns([{:train_num => 646, :delay => (15..20)}])
+
+    stop1 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:30')
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse('12:40')
+    stop3 = MetraSchedule::Stop.new :station => :ogilve, :time => Time.parse('13:30')
+    train1 = MetraSchedule::Train.new :stops => [stop1, stop3], :direction => :inbound, :schedule => :weekday, :train_num => 646
+    train1.delay = (15..20)
+    train2 = MetraSchedule::Train.new :stops => [stop2, stop3], :direction => :inbound, :schedule => :weekday
+    line.engines = [train1, train2]
+
+    valid_trains = line.to(:ogilve).from(:arlington_heights).at('12:35').trains
+    assert_equal((15..20), train1.delay)
+    assert_equal([train1, train2], valid_trains)
   end
 
   def test_trains_just_direction_and_time

@@ -184,7 +184,7 @@ module MetraSchedule
             find_train_by_train_num(d[:train_num]).delay = d[:delay]
           end
         end
-        engines
+        filter_by_start.call(engines) # Factor in the delay start time
       end
     end
 
@@ -206,7 +206,11 @@ module MetraSchedule
       lambda do |engines|
         return engines unless @time and @start
         engines.find_all do |engine|
-          engine.in_time?(@start, @time)
+          if engine.delay
+            engine.in_time?(@start, (@time - (engine.delay.first * 60)))
+          else
+            engine.in_time?(@start, @time)
+          end
         end
       end
     end
