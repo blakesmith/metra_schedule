@@ -30,6 +30,7 @@ module MetraSchedule
     end
 
     def departure_with_delay
+      return @my_departure unless @del_threshold
       if @my_departure
         @my_departure + (60 * @del_threshold)
       end
