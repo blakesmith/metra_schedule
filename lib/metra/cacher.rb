@@ -49,6 +49,10 @@ module MetraSchedule
       false
     end
 
+    def clear_delays
+      FileUtils.rm(File.join(@cache_dir, @delay_file))
+    end
+
     def persist_line(line)
       create_cache_dir_if_not_exists
       return false unless line.engines
