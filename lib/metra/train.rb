@@ -42,6 +42,10 @@ module MetraSchedule
       end
     end
 
+    def departure_with_delay
+      my_departure + (60 * @delay.first)
+    end
+
     def <=>(other)
       if my_departure
         return 1 if self.my_departure > other.my_departure
