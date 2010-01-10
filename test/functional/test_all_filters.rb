@@ -14,9 +14,9 @@ class TestLine < Test::Unit::TestCase
 
   def test_all_filters
     @line.from(:ogilve).to(:barrington).at(Time.parse("11:29PM")).on(Date.parse("Dec 27 2009"))
-    assert_equal(1, @line.trains.count)
+    assert_equal(2, @line.trains.count)
     @line.from(:ogilve).to(:barrington).at(Time.parse("3:00AM")).on(Date.parse("Dec 27 2009"))
-    assert_equal(7, @line.trains.count)
+    assert_equal(8, @line.trains.count)
   end
 
 end

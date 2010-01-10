@@ -50,6 +50,16 @@ class TestLine < Test::Unit::TestCase
     assert_equal(false, @@t.in_time?(:barrington, Time.parse("12:35PM")))
   end
 
+  def test_in_time_midnight_inclusive
+    stop1 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:30AM")
+    stop2 = MetraSchedule::Stop.new :station => :cary, :time => Time.parse("2:45AM")
+    stop3 = MetraSchedule::Stop.new :station => :harvard, :time => Time.parse("4:00AM")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2, stop3]
+    assert_equal(true, @@t.in_time?(:arlington_heights, Time.parse("11:45PM")))
+    assert_equal(true, @@t.in_time?(:cary, Time.parse("11:45PM")))
+    assert_equal(false, @@t.in_time?(:harvard, Time.parse("11:45PM")))
+  end
+
   def test_in_time_same_time_next_day
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
