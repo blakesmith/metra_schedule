@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Blake Smith"]
-  s.date = %q{2010-01-08}
+  s.date = %q{2010-02-03}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule}
   s.email = %q{blakesmith0@gmail.com}
   s.extra_rdoc_files = [
@@ -35,6 +35,7 @@ Gem::Specification.new do |s|
      "metra_schedule.gemspec",
      "test/fixture/UP_NW.html",
      "test/fixture/service_updates_alerts.html",
+     "test/fixture/service_updates_alerts_multiple_with_non_delay.html",
      "test/fixture/service_updates_alerts_no_advisories.html",
      "test/fixture/service_updates_alerts_no_range.html",
      "test/functional/test_all_filters.rb",
