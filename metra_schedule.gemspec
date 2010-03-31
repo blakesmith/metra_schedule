@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{metra_schedule}
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Blake Smith"]
-  s.date = %q{2010-02-03}
+  s.date = %q{2010-03-31}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule}
   s.email = %q{blakesmith0@gmail.com}
   s.extra_rdoc_files = [
