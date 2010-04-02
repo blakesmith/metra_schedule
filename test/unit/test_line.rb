@@ -324,6 +324,24 @@ class TestLine < Test::Unit::TestCase
     end
   end
 
+  def test_on_holiday_fixed_date_holidays
+    line = Metra.new.line(:up_nw)
+    assert_equal(:holiday, line.on(Date.parse('january 1st')).sched)
+    assert_equal(:holiday, line.on(Date.parse('july 4th')).sched)
+    assert_equal(:holiday, line.on(Date.parse('december 25th')).sched)
+  end
+
+  def test_on_holiday_moving_date_holidays
+    line = Metra.new.line(:up_nw)
+    assert_equal(:holiday, line.on(Date.parse('may 31st 2010')).sched)
+#    assert_equal(:holiday, line.on(Date.parse('may 30st 2009')).sched)
+  end
+
+  def test_on_holiday_other_years
+    line = Metra.new.line(:up_nw)
+    assert_equal(:holiday, line.on(Date.parse('january 1st 2007')).sched)
+  end
+
   def test_deduce_schedule
     line = Metra.new.line(:up_nw)
     Timecop.freeze(2009, 12, 27)

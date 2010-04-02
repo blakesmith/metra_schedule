@@ -135,6 +135,7 @@ module MetraSchedule
       @sched = :weekday if (1..5).include?(date.cwday)
       @sched = :saturday if date.cwday == 6
       @sched = :sunday if date.cwday == 7
+      @sched = :holiday if today_holiday?(date)
       self
     end
 
@@ -242,6 +243,22 @@ module MetraSchedule
           end
         end
       end
+    end
+
+    def today_holiday?(date)
+      valid_holidays = 
+      {
+        :new_years_day => Date.parse('january 1st'),
+        :memorial_day => Date.parse('may 31st'),
+        :independence_day => Date.parse('july 4th'),
+        :labor_day => Date.parse('september 6th'),
+        :thanksgiving => Date.parse('november 25th'),
+        :christmas => Date.parse('december 25th')
+      }
+      return true if valid_holidays.any? do |holiday| 
+        holiday[1].month == date.month && holiday[1].day == date.day
+      end
+      false
     end
 
   end
