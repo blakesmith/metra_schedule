@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Blake Smith"]
-  s.date = %q{2010-03-31}
+  s.date = %q{2010-04-06}
   s.description = %q{metra_schedule provides a ruby object interface to the Chicago metra train schedule}
   s.email = %q{blakesmith0@gmail.com}
   s.extra_rdoc_files = [
@@ -88,11 +88,14 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<nokogiri>, [">= 1.4.1"])
+      s.add_runtime_dependency(%q<holidays>, [">= 0.9.3"])
     else
       s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
+      s.add_dependency(%q<holidays>, [">= 0.9.3"])
     end
   else
     s.add_dependency(%q<nokogiri>, [">= 1.4.1"])
+    s.add_dependency(%q<holidays>, [">= 0.9.3"])
   end
 end
 

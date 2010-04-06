@@ -32,6 +32,7 @@ begin
     gemspec.homepage = "http://github.com/blakesmith/metra_schedule"
     gemspec.authors = ["Blake Smith"]
     gemspec.add_dependency('nokogiri', '>=1.4.1')
+    gemspec.add_dependency('holidays', '>=0.9.3')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: gem install jeweler"

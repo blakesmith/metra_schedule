@@ -333,13 +333,12 @@ class TestLine < Test::Unit::TestCase
 
   def test_on_holiday_moving_date_holidays
     line = Metra.new.line(:up_nw)
-    assert_equal(:holiday, line.on(Date.parse('may 31st 2010')).sched)
-#    assert_equal(:holiday, line.on(Date.parse('may 30st 2009')).sched)
-  end
-
-  def test_on_holiday_other_years
-    line = Metra.new.line(:up_nw)
-    assert_equal(:holiday, line.on(Date.parse('january 1st 2007')).sched)
+    assert_equal(:holiday, line.on(Date.parse('may 31st 2010')).sched) #Memorial Day
+    assert_equal(:holiday, line.on(Date.parse('may 25th 2009')).sched)
+    assert_equal(:holiday, line.on(Date.parse('september 6th 2010')).sched) #Labor Day
+    assert_equal(:holiday, line.on(Date.parse('september 7th 2009')).sched)
+    assert_equal(:holiday, line.on(Date.parse('november 25th 2010')).sched) #Thanksgiving
+    assert_equal(:holiday, line.on(Date.parse('november 26th 2009')).sched) #Thanksgiving
   end
 
   def test_deduce_schedule

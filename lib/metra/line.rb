@@ -1,4 +1,6 @@
 require File.join(File.dirname(__FILE__), 'train_data')
+require 'holidays'
+require 'holidays/us'
 
 module MetraSchedule
   class Line
@@ -246,17 +248,18 @@ module MetraSchedule
     end
 
     def today_holiday?(date)
-      valid_holidays = 
-      {
-        :new_years_day => Date.parse('january 1st'),
-        :memorial_day => Date.parse('may 31st'),
-        :independence_day => Date.parse('july 4th'),
-        :labor_day => Date.parse('september 6th'),
-        :thanksgiving => Date.parse('november 25th'),
-        :christmas => Date.parse('december 25th')
-      }
-      return true if valid_holidays.any? do |holiday| 
-        holiday[1].month == date.month && holiday[1].day == date.day
+      valid_holidays = [
+        "New Year's Day",
+        "Memorial Day",
+        "Independence Day",
+        "Labor Day",
+        "Thanksgiving",
+        "Christmas Day"
+      ]
+      if date.holiday?
+        date.holidays.each do |holiday|
+          return true if valid_holidays.any? {|valid| valid == holiday[:name]}
+        end
       end
       false
     end
