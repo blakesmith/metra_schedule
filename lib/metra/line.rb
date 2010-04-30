@@ -23,8 +23,7 @@ module MetraSchedule
         filter_by_start,
         filter_by_direction,
         filter_by_schedule,
-        inject_my_times,
-        inject_effective_date
+        inject_my_times
       ]
     end
 
@@ -147,6 +146,7 @@ module MetraSchedule
       @sched = :sunday if date.cwday == 7
       @sched = :holiday if today_holiday?(date)
       @effective_date = date
+      inject_effective_date
       self
     end
 
@@ -183,21 +183,19 @@ module MetraSchedule
 
     private
 
+    def inject_effective_date
+      return engines unless @effective_date and @engines
+      @engines.each do |engine|
+        engine.effective_date = @effective_date
+      end
+    end
+
     def inject_my_times
       lambda do |engines|
         return engines unless @start and @destination
         engines.each do |engine|
           engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
           engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
-        end
-      end
-    end
-
-    def inject_effective_date
-      lambda do |engines|
-        return engines unless @effective_date
-        engines.each do |engine|
-          engine.effective_date = @effective_date
         end
       end
     end

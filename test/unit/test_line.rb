@@ -354,8 +354,8 @@ class TestLine < Test::Unit::TestCase
 
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
     train1 = MetraSchedule::Train.new :train_num => 642, :direction => :inbound, :stops => [stop1], :schedule => :weekday
-    line.on(date)
     line.engines = [train1]
+    line.on(date)
 
     assert_equal(1, line.trains.count)
     assert_equal(date, line.trains.first.effective_date)
