@@ -20,13 +20,13 @@ module MetraSchedule
 
     def in_time?(station, time)
       stop_time = stops.find {|s| s.station == station}.time
-      stop_time.to_today > time.to_today
+      stop_time.fast_forward > time.fast_forward
     end
 
     def departure_and_arrival(start, destination)
       departure = @stops.find {|s| s.station == start}.time
       arrival = @stops.find {|s| s.station == destination}.time
-      {:departure => departure.to_today, :arrival => arrival.to_today}
+      {:departure => departure.fast_forward, :arrival => arrival.fast_forward}
     end
 
     def departure_with_delay
@@ -38,7 +38,7 @@ module MetraSchedule
 
     def my_travel_time
       return nil unless @my_departure and @my_arrival
-      minutes = (@my_arrival.to_today.to_i - @my_departure.to_today.to_i) / 60
+      minutes = (@my_arrival.fast_forward.to_i - @my_departure.fast_forward.to_i) / 60
     end
 
     def print_my_travel_time
