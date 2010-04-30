@@ -341,6 +341,26 @@ class TestLine < Test::Unit::TestCase
     assert_equal(:holiday, line.on(Date.parse('november 26th 2009')).sched) #Thanksgiving
   end
 
+  def test_on_effective_date
+    line = Metra.new.line(:up_nw)
+    date = Date.parse("dec 31st 2009")
+    line.on(date)
+    assert_equal(date, line.effective_date)
+  end
+
+  def test_on_with_effective_date_injection
+    line = Metra.new.line(:up_nw)
+    date = Date.parse("dec 17th 2009")
+
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse('12:30')
+    train1 = MetraSchedule::Train.new :train_num => 642, :direction => :inbound, :stops => [stop1], :schedule => :weekday
+    line.on(date)
+    line.engines = [train1]
+
+    assert_equal(1, line.trains.count)
+    assert_equal(date, line.trains.first.effective_date)
+  end
+
   def test_deduce_schedule
     line = Metra.new.line(:up_nw)
     Timecop.freeze(2009, 12, 27)

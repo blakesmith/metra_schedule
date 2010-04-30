@@ -8,6 +8,7 @@ module MetraSchedule
 
     attr_reader :cacher, :cache_dir 
     attr_reader :line_key, :name, :url, :dir, :sched, :start, :destination, :time, :del_threshold
+    attr_reader :effective_date
     attr_accessor :engines
 
     def initialize(line_name)
@@ -17,7 +18,14 @@ module MetraSchedule
       @line_key = line_name
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
-      @filters = [filter_by_stop, filter_by_start, filter_by_direction, filter_by_schedule, inject_my_times]
+      @filters = [
+        filter_by_stop,
+        filter_by_start,
+        filter_by_direction,
+        filter_by_schedule,
+        inject_my_times,
+        inject_effective_date
+      ]
     end
 
     def config(args)
@@ -138,6 +146,7 @@ module MetraSchedule
       @sched = :saturday if date.cwday == 6
       @sched = :sunday if date.cwday == 7
       @sched = :holiday if today_holiday?(date)
+      @effective_date = date
       self
     end
 
@@ -180,6 +189,15 @@ module MetraSchedule
         engines.each do |engine|
           engine.my_departure = engine.departure_and_arrival(@start, @destination)[:departure]
           engine.my_arrival = engine.departure_and_arrival(@start, @destination)[:arrival]
+        end
+      end
+    end
+
+    def inject_effective_date
+      lambda do |engines|
+        return engines unless @effective_date
+        engines.each do |engine|
+          engine.effective_date = @effective_date
         end
       end
     end

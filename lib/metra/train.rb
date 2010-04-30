@@ -1,7 +1,7 @@
 module MetraSchedule
   class Train
     attr_reader :train_num, :schedule, :bike_limit, :direction, :stops
-    attr_accessor :my_departure, :my_arrival, :delay, :del_threshold # Injected when the line is filtered
+    attr_accessor :effective_date, :my_departure, :my_arrival, :delay, :del_threshold # Injected when the line is filtered
 
     def initialize(options={})
       unless options.empty?
@@ -20,13 +20,13 @@ module MetraSchedule
 
     def in_time?(station, time)
       stop_time = stops.find {|s| s.station == station}.time
-      stop_time.fast_forward > time.fast_forward
+      stop_time.fast_forward(ff_date) > time.fast_forward(ff_date)
     end
 
     def departure_and_arrival(start, destination)
       departure = @stops.find {|s| s.station == start}.time
       arrival = @stops.find {|s| s.station == destination}.time
-      {:departure => departure.fast_forward, :arrival => arrival.fast_forward}
+      {:departure => departure.fast_forward(ff_date), :arrival => arrival.fast_forward(ff_date)}
     end
 
     def departure_with_delay
@@ -38,7 +38,7 @@ module MetraSchedule
 
     def my_travel_time
       return nil unless @my_departure and @my_arrival
-      minutes = (@my_arrival.fast_forward.to_i - @my_departure.fast_forward.to_i) / 60
+      minutes = (@my_arrival.fast_forward(ff_date).to_i - @my_departure.fast_forward(ff_date).to_i) / 60
     end
 
     def print_my_travel_time
@@ -62,6 +62,11 @@ module MetraSchedule
     end
 
     private 
+
+    # What day do we want to bring the schedule up to? Assume today if not specified
+    def ff_date
+      @effictive_date ? @effective_date.to_time : Time.now
+    end
 
     def my_travel_hours
       (my_travel_time / 60.0).floor
