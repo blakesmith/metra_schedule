@@ -65,7 +65,7 @@ module MetraSchedule
 
     # What day do we want to bring the schedule up to? Assume today if not specified
     def ff_date
-      @effictive_date ? @effective_date.to_time : Time.now
+      @effective_date ? @effective_date.to_time : Time.now
     end
 
     def my_travel_hours

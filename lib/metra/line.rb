@@ -184,7 +184,7 @@ module MetraSchedule
     private
 
     def inject_effective_date
-      return engines unless @effective_date and @engines
+      return unless @effective_date and @engines
       @engines.each do |engine|
         engine.effective_date = @effective_date
       end

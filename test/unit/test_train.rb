@@ -80,6 +80,20 @@ class TestLine < Test::Unit::TestCase
     assert_equal({:departure => Time.parse("12:30"), :arrival => Time.parse("12:40")}, train.departure_and_arrival(:barrington, :arlington_heights))
   end
 
+  def test_departure_and_arrival_for_tomorrow
+    Timecop.freeze("april 29th 2010 3PM")
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
+    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+
+    l = Metra.new.line(:up_nw)
+    l.engines = [@@t]
+    l.on(Date.today + 1)
+    train = l.trains.first
+    assert_not_nil train
+    assert_equal({:departure => Time.parse("12:30PM"), :arrival => Time.parse("12:40PM")}, train.departure_and_arrival(:barrington, :arlington_heights))
+  end
+
   def test_my_departure_and_my_arrival
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
