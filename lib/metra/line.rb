@@ -146,7 +146,6 @@ module MetraSchedule
       @sched = :sunday if date.cwday == 7
       @sched = :holiday if today_holiday?(date)
       @effective_date = date
-      inject_effective_date
       self
     end
 
@@ -177,6 +176,9 @@ module MetraSchedule
       return [] unless engines
       if MetraSchedule::Cacher.new.delays_exist?
         @filters.insert(0, inject_delays)
+      end
+      if @effective_date
+        inject_effective_date
       end
       @filters.inject(engines) { |e, fun| fun.call(e) }.sort
     end
