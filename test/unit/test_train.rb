@@ -81,7 +81,7 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_departure_and_arrival_for_tomorrow
-    Timecop.freeze("april 29th 2010 3PM")
+    Timecop.freeze(2010, 4, 29)
     stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
     stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
     @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
@@ -91,7 +91,8 @@ class TestLine < Test::Unit::TestCase
     l.on(Date.today + 1)
     train = l.trains.first
     assert_not_nil train
-    assert_equal({:departure => Time.parse("12:30PM"), :arrival => Time.parse("12:40PM")}, train.departure_and_arrival(:barrington, :arlington_heights))
+    expected = {:departure => Time.parse("april 30th 2010 12:30PM"), :arrival => Time.parse("april 30th 2010 12:40PM")}
+    assert_equal(expected, train.departure_and_arrival(:barrington, :arlington_heights))
   end
 
   def test_my_departure_and_my_arrival
