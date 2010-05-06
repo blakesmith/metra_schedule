@@ -60,7 +60,7 @@ module MetraSchedule
         :fort_sheridan,
         :lake_forest,
         :lake_bluff,
-        :greate_lakes,
+        :great_lakes,
         :north_chicago,
         :waukegan,
         :zion,
