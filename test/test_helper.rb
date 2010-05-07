@@ -3,9 +3,13 @@ require 'time'
 require 'test/unit'
 require 'fileutils'
 require 'rubygems'
-#require 'mocha'
+require 'bundler'
 
-require File.join(File.dirname(__FILE__), "timecop", "lib", "timecop")
+Bundler.setup :test
+
+require 'mocha'
+require 'timecop'
+
 require File.join(File.dirname(__FILE__), "../lib", "metra")
 
 module TestUnit
