@@ -81,18 +81,19 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_departure_and_arrival_for_tomorrow
-    Timecop.freeze(2010, 4, 29)
-    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
-    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
-    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+    Timecop.freeze(2010, 4, 29) do
+      stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
+      stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
+      @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
 
-    l = Metra.new.line(:up_nw)
-    l.engines = [@@t]
-    l.on(Date.today + 1)
-    train = l.trains.first
-    assert_not_nil train
-    expected = {:departure => Time.parse("april 30th 2010 12:30PM"), :arrival => Time.parse("april 30th 2010 12:40PM")}
-    assert_equal(expected, train.departure_and_arrival(:barrington, :arlington_heights))
+      l = Metra.new.line(:up_nw)
+      l.engines = [@@t]
+      l.on(Date.today + 1)
+      train = l.trains.first
+      assert_not_nil train
+      expected = {:departure => Time.parse("april 30th 2010 12:30PM"), :arrival => Time.parse("april 30th 2010 12:40PM")}
+      assert_equal(expected, train.departure_and_arrival(:barrington, :arlington_heights))
+    end
   end
 
   def test_my_departure_and_my_arrival
@@ -108,17 +109,19 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_my_departure_and_my_arrival_with_cached_from_another_day
-    Timecop.freeze(2010, 1, 5)
-    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
-    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
-    @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+    Timecop.freeze(2010, 1, 5) do
+      stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30")
+      stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40")
+      @@t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+    end
 
-    Timecop.freeze(2010, 1, 6)
-    l = Metra.new.line(:up_nw).from(:barrington).to(:arlington_heights)
-    l.engines = [@@t]
-    train = l.trains.first
-    assert_equal(Time.parse("12:30"), train.my_departure)
-    assert_equal(Time.parse("12:40"), train.my_arrival)
+    Timecop.freeze(2010, 1, 6) do
+      l = Metra.new.line(:up_nw).from(:barrington).to(:arlington_heights)
+      l.engines = [@@t]
+      train = l.trains.first
+      assert_equal(Time.parse("12:30"), train.my_departure)
+      assert_equal(Time.parse("12:40"), train.my_arrival)
+    end
   end
 
   def test_my_departure_and_my_arrival_with_no_start_or_destination

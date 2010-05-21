@@ -286,31 +286,36 @@ class TestLine < Test::Unit::TestCase
 
 
   def test_deduce_direction_by_time
-    Timecop.freeze(Time.parse("11:00AM"))
-    line = Metra.new.line(:up_nw).deduce_direction_by_time
-    assert_equal(:inbound, line.dir)
+    Timecop.freeze(Time.parse("11:00AM")) do
+      line = Metra.new.line(:up_nw).deduce_direction_by_time
+      assert_equal(:inbound, line.dir)
+    end
 
-    Timecop.freeze(Time.parse("12:01PM"))
-    line = Metra.new.line(:up_nw).deduce_direction_by_time
-    assert_equal(:outbound, line.dir)
+    Timecop.freeze(Time.parse("12:01PM")) do
+      line = Metra.new.line(:up_nw).deduce_direction_by_time
+      assert_equal(:outbound, line.dir)
+    end
   end
 
   def test_deduce_direction_by_time_after_midnight
-    Timecop.freeze(Time.parse("12:01AM"))
-    line = Metra.new.line(:up_nw).deduce_direction_by_time
-    assert_equal(:outbound, line.dir)
+    Timecop.freeze(Time.parse("12:01AM")) do
+      line = Metra.new.line(:up_nw).deduce_direction_by_time
+      assert_equal(:outbound, line.dir)
+    end
   end
 
   def test_deduce_direction_by_time_at_midnight
-    Timecop.freeze(Time.parse("12:00AM"))
-    line = Metra.new.line(:up_nw).deduce_direction_by_time
-    assert_equal(:outbound, line.dir)
+    Timecop.freeze(Time.parse("12:00AM")) do
+      line = Metra.new.line(:up_nw).deduce_direction_by_time
+      assert_equal(:outbound, line.dir)
+    end
   end
 
   def test_deduce_direction_by_time_at_3AM
-    Timecop.freeze(Time.parse("3:00AM"))
-    line = Metra.new.line(:up_nw).deduce_direction_by_time
-    assert_equal(:inbound, line.dir)
+    Timecop.freeze(Time.parse("3:00AM")) do
+      line = Metra.new.line(:up_nw).deduce_direction_by_time
+      assert_equal(:inbound, line.dir)
+    end
   end
 
   def test_on
@@ -363,8 +368,9 @@ class TestLine < Test::Unit::TestCase
 
   def test_deduce_schedule
     line = Metra.new.line(:up_nw)
-    Timecop.freeze(2009, 12, 27)
-    assert_equal(:sunday, line.deduce_schedule.sched)
+    Timecop.freeze(2009, 12, 27) do
+      assert_equal(:sunday, line.deduce_schedule.sched)
+    end
   end
 
   def test_find_train_by_train_num
