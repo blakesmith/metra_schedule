@@ -19,4 +19,4 @@ end
 Time.send(:include, MetraSchedule::Extensions::TimeExtension)
 
 # Fix for Ruby 1.8 - doesn't include 'to_time'
-Date.send(:include, MetraSchedule::Extensions::DateExtension) unless Date.new.respond_to?(:to_time)
+Date.send(:include, MetraSchedule::Extensions::DateExtension) unless Date.instance_methods.include?('to_time')
