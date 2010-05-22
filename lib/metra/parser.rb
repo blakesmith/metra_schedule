@@ -66,7 +66,7 @@ module MetraSchedule
 
     def make_stop(node, station_num, direction)
       node_text = node.text
-      node_text = node_text[0..-2] if node_text[-1] == "x"
+      node_text = node_text[0..-2] if node_text.include?('x')
       return nil if node_text == "– "
       time = Time.parse(node_text + am_or_pm(node))
       if direction == :inbound
