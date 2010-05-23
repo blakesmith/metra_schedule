@@ -106,6 +106,16 @@ module MetraSchedule
       stops
     end
 
+    def find_table(args)
+      @tables.find { |t|
+        t[:direction] == args[:direction] && t[:schedule] == args[:schedule]
+      }[:tables][args[:table]-1]
+    end
+
+    def find_node(table, args)
+      table.xpath("tbody[#{args[:row]}]/tr/td[#{args[:column]}]").first
+    end
+
     def sanitize(input)
       input.delete_at(0) if input.is_a?(Array)
       input

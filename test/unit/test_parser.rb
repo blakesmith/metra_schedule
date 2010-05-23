@@ -119,4 +119,17 @@ class TestLine < Test::Unit::TestCase
     assert_equal(12, train_640.bike_limit)
   end
 
+  def test_find_table
+    expected = up_nw_stub.tables[3][:tables][1]
+    actual = up_nw_stub.find_table(:schedule => :weekday, :direction => :outbound, :table => 2)
+    assert_equal(expected.text, actual.text)
+  end
+
+  def test_find_node
+    table = up_nw_stub.find_table(:schedule => :weekday, :direction => :outbound, :table => 2)
+    expected = up_nw_stub.tables[3][:tables][1].xpath("tbody[2]/tr/td[5]").first
+    actual = up_nw_stub.find_node(table, :row => 2, :column => 5)
+    assert_equal(expected.text, actual.text)
+  end
+
 end
