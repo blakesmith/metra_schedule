@@ -94,7 +94,7 @@ Stop.pretty_print(station) :: Converts the station symbol to something human rea
 line.line_key :: Symbol of the line name
 line.name :: Human readable line name EG - "Union Pacific Northwest"
 line.url :: Url that the parser scrapes from.
-line.dir :: Symbol representing selected line direction. :outbound or :inbound. Set with Line#outbound Line#inbound or deduced using Line#from and Line#to or by current time of day using Line#deduce_direction_by_time
+line.dir :: Symbol representing selected line direction. :outbound or :inbound. Set with Line#outbound Line#inbound or deduced using Line#from and Line#to
 line.sched :: Symbol representing selected line schedule. :weekday, :saturday or :sunday. Set with Line#weekday, Line#saturday Line#sunday Line#on(date) or Line#deduce_schedule
 line.start :: Symbol representing starting station name. EG - :clyborn. Set with Line#from
 line.destination :: Symbol representing destanation station name. EG - :ogilve. Set with Line#to
@@ -111,7 +111,6 @@ line.direction(dir) :: Set the line direction. :outbound or :inbound
 line.outbound :: Same as line.direction(:outbound)
 line.inbound :: Same as line.direction(:inbound)
 line.deduce_direction :: Infers line direction if you specified Line#from and Line#to
-line.deduce_direction_by_time :: Infers line direction based on the system clocks time of day. Before noon it sets to inbound, after noon it assumes outbound
 line.schedule(sched) :: Sets the line schedule. Either :weekday :saturday or :sunday
 line.weekday :: Same as line.direction(:weekday)
 line.saturday :: Same as line.direction(:saturday)
