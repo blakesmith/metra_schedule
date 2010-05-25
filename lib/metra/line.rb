@@ -153,20 +153,6 @@ module MetraSchedule
       self
     end
 
-    def deduce_direction_by_time
-      before_noon = Time.now < Time.parse("12:00PM")
-      after_noon = Time.now > Time.parse("12:00PM")
-      after_midnight_until_two = (Time.now >= Time.parse("12:00AM") and Time.now < Time.parse("2:00AM"))
-      if after_noon or after_midnight_until_two
-        @dir = :outbound
-      elsif before_noon
-        @dir = :inbound
-      else
-        @dir = :inbound
-      end
-      self
-    end
-
     def find_train_by_train_num(train_num)
       @engines.find {|e| e.train_num == train_num}
     end

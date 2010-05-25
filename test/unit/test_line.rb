@@ -284,40 +284,6 @@ class TestLine < Test::Unit::TestCase
     assert_equal([train1, train2, train3, train4], line.trains)
   end
 
-
-  def test_deduce_direction_by_time
-    Timecop.freeze(Time.parse("11:00AM")) do
-      line = Metra.new.line(:up_nw).deduce_direction_by_time
-      assert_equal(:inbound, line.dir)
-    end
-
-    Timecop.freeze(Time.parse("12:01PM")) do
-      line = Metra.new.line(:up_nw).deduce_direction_by_time
-      assert_equal(:outbound, line.dir)
-    end
-  end
-
-  def test_deduce_direction_by_time_after_midnight
-    Timecop.freeze(Time.parse("12:01AM")) do
-      line = Metra.new.line(:up_nw).deduce_direction_by_time
-      assert_equal(:outbound, line.dir)
-    end
-  end
-
-  def test_deduce_direction_by_time_at_midnight
-    Timecop.freeze(Time.parse("12:00AM")) do
-      line = Metra.new.line(:up_nw).deduce_direction_by_time
-      assert_equal(:outbound, line.dir)
-    end
-  end
-
-  def test_deduce_direction_by_time_at_3AM
-    Timecop.freeze(Time.parse("3:00AM")) do
-      line = Metra.new.line(:up_nw).deduce_direction_by_time
-      assert_equal(:inbound, line.dir)
-    end
-  end
-
   def test_on
     line = Metra.new.line(:up_nw)
     assert_equal(:weekday, line.on(Date.civil(2009, 12, 29)).sched)
