@@ -6,6 +6,14 @@ class TestLine < Test::Unit::TestCase
     FileUtils.rmtree(MetraSchedule::Cacher.new.cache_dir)
   end
 
+  def setup
+    cleanup_dir
+  end
+
+  def teardown
+    cleanup_dir
+  end
+
   def test_init
     assert_nothing_raised do
       MetraSchedule::Cacher.new
@@ -13,33 +21,26 @@ class TestLine < Test::Unit::TestCase
   end
 
   def test_check_for_and_create_metra_cache_dir
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     assert_equal(false, c.check_for_metra_cache_dir)
     c.create_metra_cache_dir
     assert_equal(true, c.check_for_metra_cache_dir)
-    cleanup_dir
   end
 
   def test_create_cache_dir_if_not_exists
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     assert_equal(false, c.check_for_metra_cache_dir)
     assert_equal(true, c.create_cache_dir_if_not_exists)
-    cleanup_dir
   end
 
   def test_check_if_line_cache_file_exists
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     l = Metra.new.line(:up_nw) 
     c.create_cache_dir_if_not_exists
     assert_equal(false, c.line_exists?(l))
-    cleanup_dir
   end
 
   def test_create_engine_cache
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     line = Metra.new.line(:up_nw) 
     c.create_cache_dir_if_not_exists
@@ -54,11 +55,9 @@ class TestLine < Test::Unit::TestCase
 
     assert_equal(true, c.persist_line(line))
     assert_equal(line.engines.count, c.retrieve_line(line).count)
-    cleanup_dir
   end
 
   def test_load_cache
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     line = Metra.new.line(:up_nw) 
     c.create_cache_dir_if_not_exists
@@ -73,28 +72,22 @@ class TestLine < Test::Unit::TestCase
 
     assert_equal(true, MetraSchedule::Cacher.store_to_cache(line))
     assert_equal(c.retrieve_line(line).count, MetraSchedule::Cacher.load_from_cache(line).count)
-    cleanup_dir
   end
 
   def test_persist_delays
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     data = [{:train_num => 800, :delay => (15..30)}]
     assert_equal(true, c.persist_delays(data))
-    cleanup_dir
   end
 
   def test_retrieve_delays
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     data = [{:train_num => 800, :delay => (15..30)}]
     c.persist_delays(data)
     assert_equal(data, c.retrieve_delays)
-    cleanup_dir
   end
 
   def test_clear_delays
-    cleanup_dir
     c = MetraSchedule::Cacher.new
     data = [{:train_num => 800, :delay => (15..30)}]
     c.persist_delays(data)
@@ -102,7 +95,6 @@ class TestLine < Test::Unit::TestCase
     assert_equal(true, c.clear_delays)
     assert_equal(false, c.delays_exist?)
     assert_equal(false, c.clear_delays)
-    cleanup_dir
   end
 
 end
