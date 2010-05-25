@@ -18,6 +18,8 @@ module MetraSchedule
       @line_key = line_name
       @name = LINES[line_name][:name]
       @url = LINES[line_name][:url]
+      @valid_schedules = [:weekday, :saturday, :sunday, :holiday]
+      @valid_directions = [:inbound, :outbound]
       @filters = [
         filter_by_stop,
         filter_by_start,
@@ -55,9 +57,11 @@ module MetraSchedule
       end
     end
     
-    def direction(dir=nil)
-      raise ArgumentError.new "Direction must be either :inbound or :outbound" unless dir == :outbound || dir == :inbound || dir == nil
-      @dir = dir unless dir == nil
+    def direction(dir)
+      unless @valid_directions.include?(dir)
+        raise ArgumentError.new "Direction must be either :inbound or :outbound"
+      end
+      @dir = dir
       self
     end
 
@@ -82,11 +86,11 @@ module MetraSchedule
       direction(:inbound)
     end
 
-    def schedule(sched=nil)
-      unless sched == :weekday or sched == :saturday or sched == :sunday or sched == :holiday or sched == nil
+    def schedule(sched)
+      unless @valid_schedules.include?(sched)
         raise ArgumentError.new "Schedule must be :weekday, :saturday, :sunday or :holiday"
       end
-      @sched = sched unless sched == nil
+      @sched = sched
       self
     end
 

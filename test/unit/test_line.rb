@@ -45,7 +45,7 @@ class TestLine < Test::Unit::TestCase
       line.direction :inbound
     end
     assert_equal(:inbound, line.dir)
-    assert_equal(line.direction.class, Metra.new.line(:up_nw).class)
+    assert_equal(line.direction(:inbound).class, Metra.new.line(:up_nw).class)
   end
 
   def test_direction_incorrect_argument
@@ -82,7 +82,7 @@ class TestLine < Test::Unit::TestCase
       line.schedule :holiday
     end
     assert_equal(:holiday, line.sched)
-    assert_equal(line.schedule.class, Metra.new.line(:up_nw).class)
+    assert_equal(line.schedule(:holiday).class, Metra.new.line(:up_nw).class)
   end
 
   def test_weekday
