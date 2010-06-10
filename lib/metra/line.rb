@@ -145,10 +145,7 @@ module MetraSchedule
 
     def on(date)
       raise ArgumentError.new "Argument must be a date object!" unless date.is_a?(Date)
-      @sched = :weekday if (1..5).include?(date.cwday)
-      @sched = :saturday if date.cwday == 6
-      @sched = :sunday if date.cwday == 7
-      @sched = :holiday if today_holiday?(date)
+      @sched = set_schedule(date)
       @effective_date = date
       self
     end
@@ -270,6 +267,13 @@ module MetraSchedule
         end
       end
       false
+    end
+
+    def set_schedule(date)
+      return :holiday if today_holiday?(date)
+      return :weekday if (1..5).include?(date.cwday)
+      return :saturday if date.cwday == 6
+      return :sunday if date.cwday == 7
     end
 
   end
