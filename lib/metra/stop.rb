@@ -18,5 +18,17 @@ module MetraSchedule
       sym.to_s.split("_").map {|s| s.capitalize}.join("\s")
     end
 
+    def to_hash
+      {
+        :stationName => @station,
+        :timeHour => @time.hour,
+        :timeMinute => @time.min
+      }
+    end
+
+    def to_json
+      to_hash.to_json
+    end
+
   end
 end

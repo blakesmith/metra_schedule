@@ -200,4 +200,21 @@ class TestLine < Test::Unit::TestCase
     assert_equal(Time.parse("12:35PM"), train.departure_with_delay)
   end
 
+  def test_to_json
+    stop1 = MetraSchedule::Stop.new :station => :barrington, :time => Time.parse("12:30PM")
+    stop2 = MetraSchedule::Stop.new :station => :arlington_heights, :time => Time.parse("12:40PM")
+    @t = MetraSchedule::Train.new :train_num => 651, :bike_limit => 12, :schedule => :weekday, :direction => :inbound, :stops => [stop1, stop2]
+
+    subject = JSON.parse(@t.to_json)
+    assert_equal 651, subject['trainNumber']
+    assert_equal "weekday", subject['schedule']
+    assert_equal "inbound", subject['direction']
+    stop1 = subject['stops'].first
+    assert_equal 12, stop1['timeHour']
+    assert_equal 30, stop1['timeMinute']
+    stop2 = subject['stops'].last
+    assert_equal 12, stop2['timeHour']
+    assert_equal 40, stop2['timeMinute']
+  end
+
 end

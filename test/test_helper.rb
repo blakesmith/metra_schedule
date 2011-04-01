@@ -3,6 +3,7 @@ require 'time'
 require 'test/unit'
 require 'fileutils'
 require 'rubygems'
+require 'json'
 require 'bundler'
 
 Bundler.setup :test

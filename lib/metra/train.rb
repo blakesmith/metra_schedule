@@ -61,6 +61,19 @@ module MetraSchedule
       end
     end
 
+    def to_hash
+      {
+        :trainNumber =>  @train_num,
+        :schedule => @schedule,
+        :direction => @direction,
+        :stops => @stops.map(&:to_hash)
+      }
+    end
+
+    def to_json
+      to_hash.to_json
+    end
+
     private 
 
     # What day do we want to bring the schedule up to? Assume today if not specified
