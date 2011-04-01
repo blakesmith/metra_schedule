@@ -210,9 +210,11 @@ class TestLine < Test::Unit::TestCase
     assert_equal "weekday", subject['schedule']
     assert_equal "inbound", subject['direction']
     stop1 = subject['stops'].first
+    assert_equal "Barrington", stop1['stationName']
     assert_equal 12, stop1['timeHour']
     assert_equal 30, stop1['timeMinute']
     stop2 = subject['stops'].last
+    assert_equal "Arlington Heights", stop2['stationName']
     assert_equal 12, stop2['timeHour']
     assert_equal 40, stop2['timeMinute']
   end

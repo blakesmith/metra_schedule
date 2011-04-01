@@ -20,7 +20,7 @@ module MetraSchedule
 
     def to_hash
       {
-        :stationName => @station,
+        :stationName => Stop.pretty_print(@station),
         :timeHour => @time.hour,
         :timeMinute => @time.min
       }
