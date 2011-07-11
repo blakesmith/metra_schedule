@@ -1,7 +1,4 @@
 require 'rubygems'
-require 'bundler'
-
-Bundler.setup
 
 require 'date'
 require 'time'

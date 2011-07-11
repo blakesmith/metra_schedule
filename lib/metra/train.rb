@@ -64,6 +64,7 @@ module MetraSchedule
     def to_hash
       {
         :trainNumber =>  @train_num,
+        :bikeLimit => @bike_limit,
         :schedule => @schedule,
         :direction => @direction,
         :stops => @stops.map(&:to_hash)
