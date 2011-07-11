@@ -10,6 +10,7 @@ Supported Lines:
   Union Pacific West => :up_w
   BNSF Railway => :bnsf
   Heritage Corrider => :hc
+  Southwest Service => :sws
   Rock Island District => :ri
   Metra Electric District => :me
 
