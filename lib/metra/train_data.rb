@@ -199,6 +199,26 @@ module MetraSchedule
       ],
       :tables => {:weekday_inbound => 0, :weekday_outbound => 1 }
     },
+    :sws => {
+      :name => "Southwest Service",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/sws/schedule.full.html',
+      :stations => [
+        :union_station,
+        :wrightwood,
+        :ashburn,
+        :oak_lawn,
+        :chicago_ridge,
+        :worth,
+        :palos_heights,
+        :palos_park,
+        :orland_park_143rd_street,
+        :orland_park_153rd_street,
+        :orland_park_179th_street,
+        :new_lenox_laraway_road,
+        :manhattan
+      ],
+      :tables => {:weekday_inbound => 0, :saturday_inbound => 1, :weekday_outbound => 2, :saturday_outbound => 3}
+    },
     :ri => {
       :name => "Rock Island District",
       :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/ri/schedule.full.html',
