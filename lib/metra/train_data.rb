@@ -125,6 +125,36 @@ module MetraSchedule
       :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
         :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
     },
+    :md_n => {
+      :name => "Milwaukee District North",
+      :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/md-n/schedule.full.html',
+      :stations => [
+        :union_station,
+        :western_avenue,
+        :healy,
+        :grayland,
+        :mayfair,
+        :forest_glen,
+        :edgebrook,
+        :morton_grove,
+        :golf,
+        :glenview,
+        :glen_of_north_glenview,
+        :northbrook,
+        :lake_cook_road,
+        :deerfield,
+        :lake_forest,
+        :libertyville,
+        :prairie_crossing_libertyville,
+        :grayslake,
+        :round_lake,
+        :long_lake,
+        :ingleside,
+        :fox_lake
+      ],
+      :tables => {:weekday_inbound => 0..1, :saturday_inbound => 2, :sunday_inbound => 3, \
+        :weekday_outbound => 4..5, :saturday_outbound => 6, :sunday_outbound => 7 }
+    },
     :up_w => {
       :name => "Union Pacific West",
       :url => 'http://metrarail.com/metra/en/home/maps_schedules/metra_system_map/up-w/schedule.full.html',

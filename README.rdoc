@@ -7,6 +7,7 @@ Supported Lines:
   Union Pacific North => :up_n
   North Central Service => :ncs
   Milwaukee District West => :md_w
+  Milwaukee District North => :md_n
   Union Pacific West => :up_w
   BNSF Railway => :bnsf
   Heritage Corrider => :hc
